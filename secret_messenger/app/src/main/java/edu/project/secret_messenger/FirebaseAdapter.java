@@ -25,6 +25,9 @@ public class FirebaseAdapter {
     void inputValue(String str){
         this.ref.setValue(str);
     }
+    void inputValue(Object object){
+        this.ref.setValue(object);
+    }
     String getValue(DatabaseReference dbRef){
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override

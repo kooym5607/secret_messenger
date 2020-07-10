@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.InvalidKeyException;
+
+import static edu.project.secret_messenger.util.*;
+
 public class signupActivity extends AppCompatActivity {
     private EditText idEdit;
     private EditText pwEdit;
@@ -26,7 +30,6 @@ public class signupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-
         idEdit = (EditText)findViewById(R.id.id_signup);
         pwEdit = (EditText)findViewById(R.id.pw_signup);
         nameEdit = (EditText)findViewById(R.id.name_signup);
@@ -34,18 +37,23 @@ public class signupActivity extends AppCompatActivity {
         signupFinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isSingUp = true;
-
+                boolean isNull = false; // 입력 값 중 공백이 있으면 TRUE
+                String pwHash = null;
                 String id = idEdit.getText().toString();
                 String pw = pwEdit.getText().toString();
                 String name = nameEdit.getText().toString();
 
                 ref = database.getReference("user").child(id);
                 if(id.equals("")||pw.equals("")||name.equals(""))
-                    isSingUp=false;
-                if(isSingUp==true) {
+                    isNull=true;
+                if(isNull==false) {
+                    try {
+                        pwHash = hashStr(pw);
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    }
                     DB = new FirebaseAdapter(database,ref);
-                    user = new User(id,pw,name);
+                    user = new User(id,pwHash,name);
                     DB.inputValue(user);
                     finish();
                 }

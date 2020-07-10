@@ -47,7 +47,7 @@ public class util {
         byte[] result = str.getBytes();
         return result;
     }
-    public static byte[] hashStr(String str) throws InvalidKeyException {
+    public static String hashStr(String str) throws InvalidKeyException {
         MessageDigest algorithm = null;
         try{
             String result;
@@ -55,7 +55,13 @@ public class util {
             algorithm.reset();
             algorithm.update(str.getBytes());
             byte[] messageDigest = algorithm.digest();
-            return messageDigest;
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++) {
+                sb.append(Integer.toString((messageDigest[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            result = sb.toString();
+
+            return result;
         }catch(NoSuchAlgorithmException e){
             throw new InvalidKeyException(e);
         }

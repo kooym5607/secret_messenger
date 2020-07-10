@@ -1,0 +1,183 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="edu.project.secret_messenger"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
+10
+11    <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+12    <!-- <uses-sdk android:minSdkVersion="14"/> -->
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:25:5-79
+13-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:25:22-76
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:26:5-67
+14-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:26:22-64
+15    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+15-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\883fe3ee61da0b22067da7d7ee17f093\play-services-measurement-api-17.2.2\AndroidManifest.xml:24:5-68
+15-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\883fe3ee61da0b22067da7d7ee17f093\play-services-measurement-api-17.2.2\AndroidManifest.xml:24:22-65
+16    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+16-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:26:5-82
+16-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:26:22-79
+17    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+17-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:26:5-110
+17-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:26:22-107
+18
+19    <application
+19-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:5:5-19:19
+20        android:allowBackup="true"
+20-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:6:9-35
+21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+21-->[androidx.core:core:1.1.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\f961a727fd6ff1bec6d760c391cc6822\core-1.1.0\AndroidManifest.xml:24:18-86
+22        android:debuggable="true"
+23        android:extractNativeLibs="false"
+24        android:icon="@mipmap/ic_launcher"
+24-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:7:9-43
+25        android:label="@string/app_name"
+25-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:8:9-41
+26        android:roundIcon="@mipmap/ic_launcher_round"
+26-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:9:9-54
+27        android:supportsRtl="true"
+27-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:10:9-35
+28        android:testOnly="true"
+29        android:theme="@style/AppTheme" >
+29-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:11:9-40
+30        <activity android:name="edu.project.secret_messenger.MainActivity" >
+30-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:12:9-18:20
+30-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:12:19-47
+31            <intent-filter>
+31-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:13:13-17:29
+32                <action android:name="android.intent.action.MAIN" />
+32-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:14:17-69
+32-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:14:25-66
+33
+34                <category android:name="android.intent.category.LAUNCHER" />
+34-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:16:17-77
+34-->C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:16:27-74
+35            </intent-filter>
+36        </activity>
+37
+38        <service
+38-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:29:9-35:19
+39            android:name="com.google.firebase.components.ComponentDiscoveryService"
+39-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:30:13-84
+40            android:directBootAware="true"
+40-->[com.google.firebase:firebase-common:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\1b23a58bb1c539c2a19df1b0920c32b5\firebase-common-19.3.0\AndroidManifest.xml:34:13-43
+41            android:exported="false" >
+41-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:31:13-37
+42            <meta-data
+42-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:32:13-34:85
+43                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+43-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:33:17-109
+44                android:value="com.google.firebase.components.ComponentRegistrar" />
+44-->[com.google.firebase:firebase-database:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\b307d84a91db0a98ef211055f1496305\jetified-firebase-database-19.3.0\AndroidManifest.xml:34:17-82
+45            <meta-data
+45-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\883fe3ee61da0b22067da7d7ee17f093\play-services-measurement-api-17.2.2\AndroidManifest.xml:30:13-32:85
+46                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+46-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\883fe3ee61da0b22067da7d7ee17f093\play-services-measurement-api-17.2.2\AndroidManifest.xml:31:17-139
+47                android:value="com.google.firebase.components.ComponentRegistrar" />
+47-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\883fe3ee61da0b22067da7d7ee17f093\play-services-measurement-api-17.2.2\AndroidManifest.xml:32:17-82
+48            <meta-data
+48-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:32:13-34:85
+49                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+49-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:33:17-96
+50                android:value="com.google.firebase.components.ComponentRegistrar" />
+50-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:34:17-82
+51        </service>
+52
+53        <receiver
+53-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:37:9-44:20
+54            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+54-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:38:13-78
+55            android:exported="true"
+55-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:39:13-36
+56            android:permission="com.google.android.c2dm.permission.SEND" >
+56-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:40:13-73
+57            <intent-filter>
+57-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:41:13-43:29
+58                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+58-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:42:17-81
+58-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\0dbca7ef2e7fe6dd6ad20b90edf9f9bc\firebase-iid-20.0.2\AndroidManifest.xml:42:25-78
+59            </intent-filter>
+60        </receiver>
+61
+62        <activity
+62-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\38b6c4b545e39be84f8fef63d737cf6b\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+63            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+63-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\38b6c4b545e39be84f8fef63d737cf6b\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+64            android:exported="false"
+64-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\38b6c4b545e39be84f8fef63d737cf6b\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+65            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+65-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\38b6c4b545e39be84f8fef63d737cf6b\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+66
+67        <receiver
+67-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:29:9-33:20
+68            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+68-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:30:13-85
+69            android:enabled="true"
+69-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:31:13-35
+70            android:exported="false" >
+70-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:32:13-37
+71        </receiver>
+72        <receiver
+72-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:34:9-42:20
+73            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
+73-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:35:13-100
+74            android:enabled="true"
+74-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:36:13-35
+75            android:exported="true"
+75-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:37:13-36
+76            android:permission="android.permission.INSTALL_PACKAGES" >
+76-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:38:13-69
+77            <intent-filter>
+77-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:39:13-41:29
+78                <action android:name="com.android.vending.INSTALL_REFERRER" />
+78-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:40:17-79
+78-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:40:25-76
+79            </intent-filter>
+80        </receiver>
+81
+82        <service
+82-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:44:9-47:40
+83            android:name="com.google.android.gms.measurement.AppMeasurementService"
+83-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:45:13-84
+84            android:enabled="true"
+84-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:46:13-35
+85            android:exported="false" />
+85-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:47:13-37
+86        <service
+86-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:48:9-52:72
+87            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+87-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:49:13-87
+88            android:enabled="true"
+88-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:50:13-35
+89            android:exported="false"
+89-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:51:13-37
+90            android:permission="android.permission.BIND_JOB_SERVICE" />
+90-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\10ddb5a7f44298deca40fafe6f4c087b\play-services-measurement-17.2.2\AndroidManifest.xml:52:13-69
+91
+92        <provider
+92-->[com.google.firebase:firebase-common:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\1b23a58bb1c539c2a19df1b0920c32b5\firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
+93            android:name="com.google.firebase.provider.FirebaseInitProvider"
+93-->[com.google.firebase:firebase-common:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\1b23a58bb1c539c2a19df1b0920c32b5\firebase-common-19.3.0\AndroidManifest.xml:27:13-77
+94            android:authorities="edu.project.secret_messenger.firebaseinitprovider"
+94-->[com.google.firebase:firebase-common:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\1b23a58bb1c539c2a19df1b0920c32b5\firebase-common-19.3.0\AndroidManifest.xml:28:13-72
+95            android:exported="false"
+95-->[com.google.firebase:firebase-common:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\1b23a58bb1c539c2a19df1b0920c32b5\firebase-common-19.3.0\AndroidManifest.xml:29:13-37
+96            android:initOrder="100" />
+96-->[com.google.firebase:firebase-common:19.3.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\1b23a58bb1c539c2a19df1b0920c32b5\firebase-common-19.3.0\AndroidManifest.xml:30:13-36
+97
+98        <meta-data
+98-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\f720b24cc490c109d50c0a0a1e6bf186\play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+99            android:name="com.google.android.gms.version"
+99-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\f720b24cc490c109d50c0a0a1e6bf186\play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+100            android:value="@integer/google_play_services_version" />
+100-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\f720b24cc490c109d50c0a0a1e6bf186\play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+101    </application>
+102
+103</manifest>

@@ -1,15 +1,11 @@
 package edu.project.secret_messenger;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +27,6 @@ public class signupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
 
-
         idEdit = (EditText)findViewById(R.id.id_signup);
         pwEdit = (EditText)findViewById(R.id.pw_signup);
         nameEdit = (EditText)findViewById(R.id.name_signup);
@@ -39,15 +34,25 @@ public class signupActivity extends AppCompatActivity {
         signupFinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean isSingUp = true;
+
                 String id = idEdit.getText().toString();
                 String pw = pwEdit.getText().toString();
                 String name = nameEdit.getText().toString();
-                ref = database.getReference("user").child(id);
 
-                DB = new FirebaseAdapter(database,ref);
-                user = new User(id,pw,name);
-                DB.inputValue(user);
+                ref = database.getReference("user").child(id);
+                if(id.equals("")||pw.equals("")||name.equals(""))
+                    isSingUp=false;
+                if(isSingUp==true) {
+                    DB = new FirebaseAdapter(database,ref);
+                    user = new User(id,pw,name);
+                    DB.inputValue(user);
+                    finish();
+                }
+                else
+                    Toast.makeText(signupActivity.this.getApplicationContext(),"회원가입 실패\n아이디,비밀번호,이름 중 기입하지 않은 것이 있습니다.",Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

@@ -23,7 +23,7 @@ public class FirebaseAdapter {
     }
 
     void inputValue(String str){
-        this.ref.child("테스트").setValue(str);
+        this.ref.setValue(str);
     }
     String getValue(DatabaseReference dbRef){
         dbRef.addValueEventListener(new ValueEventListener() {

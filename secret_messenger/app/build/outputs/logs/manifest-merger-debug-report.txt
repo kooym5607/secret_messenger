@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\72755d8593c3ca1ed00b11907b10c688\appcompat-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\65c09879886c04dd03c37ecd65c89ae1\constraintlayout-1.1.3\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.firebase:firebase-analytics:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\cccfd3c2b80d5fad1124ffebe28c3f3b\firebase-analytics-17.2.2\AndroidManifest.xml:2:1-9:12
@@ -49,25 +49,25 @@ MERGED from [androidx.print:print:1.0.0] C:\Users\stark\.gradle\caches\transform
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\dcf4af4213d59bd5fe489359c2b51b96\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\e5f4ab83b7154d8dd7689c213d4008f9\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\3ad98f043f0e278e1b4f445317842885\core-runtime-2.0.0\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
 	package
 		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:3:5-43
 		INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
+		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
 		INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-21:12
+		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:1-24:12
 		INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:5:5-19:19
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:5:5-22:19
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\65c09879886c04dd03c37ecd65c89ae1\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\65c09879886c04dd03c37ecd65c89ae1\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
 MERGED from [com.google.firebase:firebase-analytics:17.2.2] C:\Users\stark\.gradle\caches\transforms-2\files-2.1\cccfd3c2b80d5fad1124ffebe28c3f3b\firebase-analytics-17.2.2\AndroidManifest.xml:7:5-20
@@ -122,20 +122,28 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\st
 		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:6:9-35
 	android:theme
 		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:11:9-40
-activity#edu.project.secret_messenger.MainActivity
-ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:12:9-18:20
+activity#edu.project.secret_messenger.LoginActivity
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:13:9-19:20
 	android:name
-		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:12:19-47
+		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:13:19-48
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:13:13-17:29
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:14:13-18:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:14:17-69
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:15:17-69
 	android:name
-		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:14:25-66
+		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:15:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:16:17-77
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:17:17-77
 	android:name
-		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:16:27-74
+		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:17:27-74
+activity#edu.project.secret_messenger.signupActivity
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:20:9-51
+	android:name
+		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:20:19-49
+activity#edu.project.secret_messenger.LobbyActivity
+ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:21:9-50
+	android:name
+		ADDED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml:21:19-48
 uses-sdk
 INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\stark\Desktop\secret_messenger\secret_messenger\app\src\main\AndroidManifest.xml

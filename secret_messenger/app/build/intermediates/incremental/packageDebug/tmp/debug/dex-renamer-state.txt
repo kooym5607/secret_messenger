@@ -1,4 +1,4 @@
-#Fri Jul 10 14:25:15 KST 2020
+#Fri Jul 10 15:32:16 KST 2020
 base.0=C\:\\Users\\stark\\Desktop\\secret_messenger\\secret_messenger\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex

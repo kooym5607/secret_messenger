@@ -2,6 +2,8 @@ package edu.project.secret_messenger;
 
 import java.io.PrintStream;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class util {
     public static final char[] HEX_DIGITS = {
@@ -44,17 +46,19 @@ public class util {
     public static byte[] StrToByte(String str) throws InvalidKeyException {
         byte[] result = str.getBytes();
         return result;
-
-//        MessageDigest algorithm = null;
-//        try{
-//            algorithm = MessageDigest.getInstance("MD5");
-//            algorithm.reset();
-//            algorithm.update(str.getBytes());
-//            byte[] messageDigest = algorithm.digest();
-//            return messageDigest;
-//        }catch(NoSuchAlgorithmException e){
-//            throw new InvalidKeyException(e);
-//        }
+    }
+    public static byte[] hashStr(String str) throws InvalidKeyException {
+        MessageDigest algorithm = null;
+        try{
+            String result;
+            algorithm = MessageDigest.getInstance("MD5");
+            algorithm.reset();
+            algorithm.update(str.getBytes());
+            byte[] messageDigest = algorithm.digest();
+            return messageDigest;
+        }catch(NoSuchAlgorithmException e){
+            throw new InvalidKeyException(e);
+        }
     }
 
 }

@@ -825,6 +825,9 @@ id line1
 id line3
 id listMode
 id list_item
+id login_button
+id login_id
+id login_password
 id message
 id message_TextView
 id middle
@@ -866,6 +869,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id signup_button
 id spacer
 id split_action_bar
 id spread
@@ -946,7 +950,9 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
-layout activity_main
+layout activity_lobby
+layout activity_login
+layout activity_signup
 layout chat
 layout custom_dialog
 layout notification_action

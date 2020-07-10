@@ -28,13 +28,15 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="edu.project.secret_messenger.MainActivity" >
+        <activity android:name="edu.project.secret_messenger.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="edu.project.secret_messenger.signupActivity" />
+        <activity android:name="edu.project.secret_messenger.LobbyActivity" />
 
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"

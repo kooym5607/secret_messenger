@@ -1,0 +1,2 @@
+rootProject.name='secret_messenger'
+include ':app'

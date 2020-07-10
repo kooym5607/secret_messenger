@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "410332925014",
+    "firebase_url": "https://secretmessenger-e32a7.firebaseio.com",
+    "project_id": "secretmessenger-e32a7",
+    "storage_bucket": "secretmessenger-e32a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410332925014:android:5692fc8f7d824711cb3ff7",
+        "android_client_info": {
+          "package_name": "edu.project.secret_messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410332925014-cc19o9vm3pis02uvc7k6tqp6hvecotll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQa6LRn-JrMTWu5fMyD-z-N6JYjdn7BSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410332925014-cc19o9vm3pis02uvc7k6tqp6hvecotll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

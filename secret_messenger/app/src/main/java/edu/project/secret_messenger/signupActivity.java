@@ -44,17 +44,18 @@ public class signupActivity extends AppCompatActivity {
                 String name = nameEdit.getText().toString();
 
                 ref = database.getReference("user").child(id);
-                if(id.equals("")||pw.equals("")||name.equals(""))
-                    isNull=true;
+                if(id.equals("")||pw.equals("")||name.equals("")) {
+                    isNull = true;
+                }
                 if(isNull==false) {
                     try {
                         pwHash = hashStr(pw);
+                        user = new User(id,pw,name);
                     } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
-                    DB = new FirebaseAdapter(database,ref);
-                    user = new User(id,pwHash,name);
-                    DB.inputValue(user);
+                    ref.setValue(user);
+                    Toast.makeText(signupActivity.this.getApplicationContext(),"회원가입 성공\n" + name + " 회원님 반갑습니다.",Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else

@@ -14,13 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LobbyActivity extends AppCompatActivity {
-    private FirebaseAdapter DB;
-    private EditText msgEdit;
-    private Button msgSendBtn;
-    private TextView msgTextView;
     private ViewPager viewPager;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference();
     private LobbyViewAdapter lobbyViewAdapter;
     private TabLayout tabLayout;
 
@@ -28,8 +22,6 @@ public class LobbyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         lobbyViewAdapter = new LobbyViewAdapter(getSupportFragmentManager());
@@ -53,8 +45,5 @@ public class LobbyActivity extends AppCompatActivity {
 
             }
         });
-        DB = new FirebaseAdapter(database, myRef);
-
-
     }
 }

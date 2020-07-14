@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class userlist extends Fragment {
+public class userlistFragment extends Fragment {
     private static final String TAG = "userListFragment";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference ref;
@@ -46,10 +46,8 @@ public class userlist extends Fragment {
         ref.child("user/").addListenerForSingleValueEvent(new ValueEventListener() { // user 하위 리스트를 배열에 추가
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int count = 0;
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     User user = datas.getValue(User.class);
-                    Log.e(TAG, "user"+ count++ +"은 " + user.toString());
                     userArrayList.add(user);
                 }
                 listView = (ListView)layout.findViewById(R.id.user_listView);
@@ -101,7 +99,7 @@ public class userlist extends Fragment {
 
 
 
-    public userlist() { }
+    public userlistFragment() { }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

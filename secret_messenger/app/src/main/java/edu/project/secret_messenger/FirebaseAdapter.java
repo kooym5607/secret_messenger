@@ -13,9 +13,9 @@ import com.google.firebase.database.ValueEventListener;
 public class FirebaseAdapter {
     private FirebaseDatabase db;
     private DatabaseReference ref;
-    private String tempStr;
+    private DataSnapshot tempStr;
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "FirebaseAdapter";
 
     FirebaseAdapter(FirebaseDatabase db, DatabaseReference ref){
         this.db = db;
@@ -28,11 +28,13 @@ public class FirebaseAdapter {
     void inputValue(Object object){
         this.ref.setValue(object);
     }
-    String getValue(DatabaseReference dbRef){
-        dbRef.addValueEventListener(new ValueEventListener() {
+
+    DataSnapshot getValue(DataSnapshot snap){
+        this.ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                tempStr = dataSnapshot.getValue(String.class);
+                tempStr = dataSnapshot;
+
                 Log.d(TAG,"Firebase DB를 통해 불러온 값 : " + tempStr);
             }
 
@@ -43,7 +45,9 @@ public class FirebaseAdapter {
         });
         return tempStr;
     }
-
-
+    void setRef(DatabaseReference dbRef){
+        this.ref = dbRef;
+    }
+    DatabaseReference getRef(){return this.ref;}
 
 }

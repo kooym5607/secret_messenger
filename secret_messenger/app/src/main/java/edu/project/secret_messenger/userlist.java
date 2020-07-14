@@ -48,7 +48,7 @@ public class userlist extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     userArrayList.add(datas.getValue(User.class));
-                }
+            }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

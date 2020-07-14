@@ -38,6 +38,5 @@ public class LobbyActivity extends AppCompatActivity {
                 msgTextView.setText(str);
             }
         });
-
     }
 }

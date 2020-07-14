@@ -27,7 +27,7 @@
             android:id="@+id/pw_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="비밀번호 입력(영어)"/>
+            android:hint="비밀번호 입력(영어/숫자)"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

@@ -29,7 +29,7 @@ public class FirebaseAdapter {
         this.ref.setValue(object);
     }
 
-    DataSnapshot getValue(DataSnapshot snap){
+    DataSnapshot getValue(){
         this.ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

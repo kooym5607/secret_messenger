@@ -45,13 +45,13 @@ public class signupActivity extends AppCompatActivity {
 
                 ref = database.getReference("user/").child(id);
                 DB = new FirebaseAdapter(database,ref);
-                if(id.equals("")||pw.equals("")||name.equals("")) {
+                if(id.equals("")||pw.equals("")||name.equals("")) { // 입력칸에 빈칸이 있는지 체크
                     isNull = true;
                 }
                 if(isNull==false) {
                     try {
                         pwHash = hashStr(pw);
-                        user = new User(id,pwHash,name);
+                        user = new User(id,pwHash,name); // user 객체 생성
                     } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }

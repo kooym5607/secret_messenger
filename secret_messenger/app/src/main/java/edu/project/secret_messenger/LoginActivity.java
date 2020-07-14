@@ -44,18 +44,18 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = (Button)findViewById(R.id.login_button);
         signupBtn = (Button)findViewById(R.id.signup_button);
 
-        loginBtn.setOnClickListener(new Button.OnClickListener(){
+        loginBtn.setOnClickListener(new Button.OnClickListener(){ // 로그인 버튼 클릭리스너
             @Override
             public void onClick(View view){
                 Log.i(TAG,"로그인 버튼 클릭");
                 loginID = idEdit.getText().toString();
 
                 try {
-                    pw = hashStr(pwEdit.getText().toString());
+                    pw = hashStr(pwEdit.getText().toString()); // 입력받은 패스워드 해시로 저장
                 } catch (InvalidKeyException e) {
                     e.printStackTrace();
                 }
-                myRef.orderByChild("id").equalTo(loginID).addListenerForSingleValueEvent(new ValueEventListener() {
+                myRef.orderByChild("id").equalTo(loginID).addListenerForSingleValueEvent(new ValueEventListener() { // user 내 로그인한 ID 찾기
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getValue()==null) {
@@ -64,11 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                             pwEdit.setText(null);
                         }
                         else {
-                            for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                            for (DataSnapshot datas : dataSnapshot.getChildren()) { // ID가 존재할 시 그 ID를 키 값으로 설정
                                 id = datas.getKey();
                             }
 
-                            myRef.child(id).child("pw").addValueEventListener(new ValueEventListener() {
+                            myRef.child(id).child("pw").addValueEventListener(new ValueEventListener() { // 입력받은 pw가 id에 있는 pw와 일치한지 확인.
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     isPwEqual(dataSnapshot,pw);
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        signupBtn.setOnClickListener(new Button.OnClickListener(){
+        signupBtn.setOnClickListener(new Button.OnClickListener(){ //회원가입 버튼 클릭리스너
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(LoginActivity.this, signupActivity.class);
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void isPwEqual(DataSnapshot snap, String pw){
+    private void isPwEqual(DataSnapshot snap, String pw){ // 입력받은 패스워드와 DB에 있는 패스워드를 비교
         if(snap.getValue().equals(pw)){
             Toast.makeText(LoginActivity.this.getApplicationContext(), "로그인 성공.\n ID : " + id, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this,LobbyActivity.class));

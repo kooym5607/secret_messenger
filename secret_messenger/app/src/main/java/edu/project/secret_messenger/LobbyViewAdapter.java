@@ -13,8 +13,8 @@ public class LobbyViewAdapter extends FragmentPagerAdapter {
     public LobbyViewAdapter(FragmentManager fm){
         super(fm);
         items = new ArrayList<Fragment>();
-        items.add(new userlist());
-        items.add(new chatlist());
+        items.add(new userlistFragment());
+        items.add(new chatlistFragment());
     }
 
     @NonNull

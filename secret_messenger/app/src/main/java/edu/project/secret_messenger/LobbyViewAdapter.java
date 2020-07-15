@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class LobbyViewAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> items;
 
-    public LobbyViewAdapter(FragmentManager fm){
+    public LobbyViewAdapter(FragmentManager fm,userlistFragment user, chatlistFragment chat){
         super(fm);
         items = new ArrayList<Fragment>();
-        items.add(new userlistFragment());
-        items.add(new chatlistFragment());
+        items.add(user);
+        items.add(chat);
     }
 
     @NonNull

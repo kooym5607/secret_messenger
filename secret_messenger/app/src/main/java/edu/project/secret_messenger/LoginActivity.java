@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.InvalidKeyException;
@@ -57,7 +57,9 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (InvalidKeyException e) {
                     e.printStackTrace();
                 }
-                myRef.orderByChild("id").equalTo(loginID).addListenerForSingleValueEvent(new ValueEventListener() { // user 내 로그인한 ID 찾기
+                Query query = myRef.orderByChild("id").equalTo(loginID);
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() { // user 내 로그인한 ID 찾기
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getValue()==null) {
@@ -100,12 +102,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-
     private void isPwEqual(DataSnapshot snap, String pw){ // 입력받은 패스워드와 DB에 있는 패스워드를 비교
         if(snap.getValue().equals(pw)){
             Toast.makeText(LoginActivity.this.getApplicationContext(), "로그인 성공.\n ID : " + id, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this,LobbyActivity.class));
+            Intent intent = new Intent(LoginActivity.this,LobbyActivity.class);
+            intent.putExtra("loginID",id);
+            startActivity(intent);
             LoginActivity.this.finish();
         } else {
             Toast.makeText(LoginActivity.this.getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();

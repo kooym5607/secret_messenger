@@ -1,8 +1,11 @@
 package edu.project.secret_messenger;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import edu.project.secret_messenger.LoginActivity;
+import edu.project.secret_messenger.R;
 
 public class LoadingActivity extends Activity {
     @Override
@@ -17,6 +20,8 @@ public class LoadingActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
                 finish();
             }
         }, 2000);

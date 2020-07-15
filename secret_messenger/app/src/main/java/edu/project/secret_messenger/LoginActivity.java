@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,8 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Intent intent = new Intent(this, LoadingActivity.class);
-        startActivity(intent);
 
         idEdit = (EditText)findViewById(R.id.login_id);
         pwEdit = (EditText)findViewById(R.id.login_password);
@@ -100,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void isPwEqual(DataSnapshot snap, String pw){ // 입력받은 패스워드와 DB에 있는 패스워드를 비교
         if(snap.getValue().equals(pw)){

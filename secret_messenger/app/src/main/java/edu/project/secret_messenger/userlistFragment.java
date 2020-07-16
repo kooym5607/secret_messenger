@@ -43,13 +43,13 @@ public class userlistFragment extends Fragment {
     private FirebaseAdapter DB;
     private ListView listView;
     private ArrayList<User> userArrayList = new ArrayList<User>();;
-    private String loginID;
+    private String myID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_userlist, container, false);
-        loginID = getArguments().getString("loginID");
-        Log.w(TAG, "로그인한 사용자 : "+loginID);
+        myID = getArguments().getString("myID");
+        Log.w(TAG, "로그인한 사용자 : "+myID);
         ref = database.getReference();
         DB = new FirebaseAdapter(database,ref);
 
@@ -58,8 +58,9 @@ public class userlistFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     User user = datas.getValue(User.class);
-                    if(user.getId().equals(loginID)) {
-                        Log.e(TAG, "로그인한 사용자 : "+loginID + " 제외");
+
+                    if(user.getId().equals(myID)) {
+                        Log.e(TAG, "로그인한 사용자 : "+myID + " 제외");
                         continue;
                     }
                     else

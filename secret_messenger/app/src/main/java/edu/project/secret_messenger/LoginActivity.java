@@ -50,13 +50,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Log.i(TAG,"로그인 버튼 클릭");
-                loginID = idEdit.getText().toString();
-
                 try {
+                    loginID = hashStr(idEdit.getText().toString()); // 입력받은 ID 해시로 저장
                     pw = hashStr(pwEdit.getText().toString()); // 입력받은 패스워드 해시로 저장
                 } catch (InvalidKeyException e) {
                     e.printStackTrace();
                 }
+
                 Query query = myRef.orderByChild("id").equalTo(loginID);
 
                 query.addListenerForSingleValueEvent(new ValueEventListener() { // user 내 로그인한 ID 찾기
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         if(snap.getValue().equals(pw)){
             Toast.makeText(LoginActivity.this.getApplicationContext(), "로그인 성공.\n ID : " + id, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this,LobbyActivity.class);
-            intent.putExtra("loginID",id);
+            intent.putExtra("myID",id);
             startActivity(intent);
             LoginActivity.this.finish();
         } else {

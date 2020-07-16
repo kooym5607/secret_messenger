@@ -18,7 +18,6 @@ public class LobbyActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private LobbyViewAdapter lobbyViewAdapter;
     private TabLayout tabLayout;
-    private String value;
     private Bundle bundle = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +25,8 @@ public class LobbyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lobby);
         Intent intent = getIntent();
 
-        value = intent.getStringExtra("loginID");
-        bundle.putString("loginID",value);
+        String value = intent.getStringExtra("myID");
+        bundle.putString("myID",value);
         userlistFragment userlistFragment = new userlistFragment();
         userlistFragment.setArguments(bundle);
         chatlistFragment chatlistFragment = new chatlistFragment();

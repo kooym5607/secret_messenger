@@ -17,7 +17,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.InvalidKeyException;
-import java.util.EventListener;
 
 import static edu.project.secret_messenger.util.*;
 
@@ -44,7 +43,11 @@ public class signupActivity extends AppCompatActivity {
         sameidBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hasSameId(idEdit.getText().toString());
+                try {
+                    hasSameId(hashStr(idEdit.getText().toString()));
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                }
             }
         });
         signupFinishBtn = (Button)findViewById(R.id.signupFinishBtn);
@@ -52,23 +55,24 @@ public class signupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean isNull = false; // 입력 값 중 공백이 있으면 TRUE
-                String pwHash = null;
                 String id = idEdit.getText().toString();
                 String pw = pwEdit.getText().toString();
                 String name = nameEdit.getText().toString();
 
-                ref = database.getReference("user/").child(id);
-                DB = new FirebaseAdapter(database,ref);
+
                 if(id.equals("")||pw.equals("")||name.equals("")) { // 입력칸에 빈칸이 있는지 체크
                     isNull = true;
                 }
                 if(isNull==false) {
                     try {
-                        pwHash = hashStr(pw);
-                        user = new User(id,pwHash,name); // user 객체 생성
+                        id = hashStr(id);
+                        pw = hashStr(pw);
+                        user = new User(id,pw,name); // user 객체 생성
                     } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
+                    ref = database.getReference("user/").child(id);
+                    DB = new FirebaseAdapter(database,ref);
                     DB.inputValue(user);
 
                     Toast.makeText(signupActivity.this.getApplicationContext(),"회원가입 성공\n" + name + " 회원님 반갑습니다.",Toast.LENGTH_SHORT).show();

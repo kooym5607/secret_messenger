@@ -1,27 +1,19 @@
-package edu.project.secret_messenger;
+package edu.project.secret_messenger.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 
-import android.renderscript.Sampler;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -30,30 +22,31 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import edu.project.secret_messenger.R;
+import edu.project.secret_messenger.object.User;
+
 public class userlistFragment extends Fragment {
     private static final String TAG = "userListFragment";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference ref;
-    private FirebaseAdapter DB;
     private ListView listView;
     private ArrayList<User> userArrayList = new ArrayList<User>();;
     private String myID;
+    private Query query;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_userlist, container, false);
         myID = getArguments().getString("myID");
         Log.w(TAG, "로그인한 사용자 : "+myID);
-        ref = database.getReference();
-        DB = new FirebaseAdapter(database,ref);
+        query = database.getReference().child("user/");
 
-        ref.child("user/").addListenerForSingleValueEvent(new ValueEventListener() { // user 하위 리스트를 배열에 추가
+        query.addListenerForSingleValueEvent(new ValueEventListener() { // user 하위 리스트를 배열에 추가
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
@@ -119,14 +112,8 @@ public class userlistFragment extends Fragment {
             user = items.get(position);
             if (user != null) {
                 TextView name = (TextView) view.findViewById(R.id.toptext);
-                TextView id = (TextView) view.findViewById(R.id.bottomtext);
-                if (name != null){
-                    Log.e(TAG, "리스트 setName");
+                if (name != null) {
                     name.setText(user.getName());
-                }
-                if(id != null){
-                    Log.e(TAG, "리스트 setID");
-                    id.setText("ID: "+ user.getId());
                 }
             }
 

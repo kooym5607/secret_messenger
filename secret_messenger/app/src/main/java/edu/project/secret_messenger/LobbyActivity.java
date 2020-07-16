@@ -5,14 +5,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import edu.project.secret_messenger.fragment.chatlistFragment;
+import edu.project.secret_messenger.fragment.userlistFragment;
 
 public class LobbyActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -24,7 +21,6 @@ public class LobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
         Intent intent = getIntent();
-
         String value = intent.getStringExtra("myID");
         bundle.putString("myID",value);
         userlistFragment userlistFragment = new userlistFragment();

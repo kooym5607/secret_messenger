@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view){
                 Log.i(TAG,"로그인 버튼 클릭");
                 try {
-                    loginID = hashStr(idEdit.getText().toString()); // 입력받은 ID 해시로 저장
+                    id = idEdit.getText().toString();
+                    loginID = hashStr(id); // 입력받은 ID 해시로 저장
                     pw = hashStr(pwEdit.getText().toString()); // 입력받은 패스워드 해시로 저장
                 } catch (InvalidKeyException e) {
                     e.printStackTrace();
@@ -69,10 +72,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             for (DataSnapshot datas : dataSnapshot.getChildren()) { // ID가 존재할 시 그 ID를 키 값으로 설정
-                                id = datas.getKey();
+                                loginID = datas.getKey();
                             }
 
-                            myRef.child(id).child("pw").addValueEventListener(new ValueEventListener() { // 입력받은 pw가 id에 있는 pw와 일치한지 확인.
+                            myRef.child(loginID).child("pw").addValueEventListener(new ValueEventListener() { // 입력받은 pw가 id에 있는 pw와 일치한지 확인.
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     isPwEqual(dataSnapshot,pw);
@@ -106,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         if(snap.getValue().equals(pw)){
             Toast.makeText(LoginActivity.this.getApplicationContext(), "로그인 성공.\n ID : " + id, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this,LobbyActivity.class);
-            intent.putExtra("myID",id);
+            intent.putExtra("myID",loginID);
             startActivity(intent);
             LoginActivity.this.finish();
         } else {
@@ -115,4 +118,20 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
 }

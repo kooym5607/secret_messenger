@@ -1,4 +1,4 @@
-package edu.project.secret_messenger;
+package edu.project.secret_messenger.object;
 
 public class User {
     private String id;

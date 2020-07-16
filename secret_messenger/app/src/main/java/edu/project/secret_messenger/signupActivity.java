@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.InvalidKeyException;
 
+import edu.project.secret_messenger.object.User;
+
 import static edu.project.secret_messenger.util.*;
 
 public class signupActivity extends AppCompatActivity {
@@ -27,8 +29,7 @@ public class signupActivity extends AppCompatActivity {
     private Button signupFinishBtn;
     private Button sameidBtn;
     private FirebaseDatabase database= FirebaseDatabase.getInstance();
-    private FirebaseAdapter DB;
-    private DatabaseReference ref = database.getReference();
+    private DatabaseReference ref;
     private User user;
 
     @Override
@@ -59,7 +60,6 @@ public class signupActivity extends AppCompatActivity {
                 String pw = pwEdit.getText().toString();
                 String name = nameEdit.getText().toString();
 
-
                 if(id.equals("")||pw.equals("")||name.equals("")) { // 입력칸에 빈칸이 있는지 체크
                     isNull = true;
                 }
@@ -72,8 +72,7 @@ public class signupActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     ref = database.getReference("user/").child(id);
-                    DB = new FirebaseAdapter(database,ref);
-                    DB.inputValue(user);
+                    ref.setValue(user);
 
                     Toast.makeText(signupActivity.this.getApplicationContext(),"회원가입 성공\n" + name + " 회원님 반갑습니다.",Toast.LENGTH_SHORT).show();
                     finish();
@@ -85,8 +84,8 @@ public class signupActivity extends AppCompatActivity {
     }
 
     private void hasSameId(String id){
-        ref = database.getReference("user/");
-        Query query = ref.orderByChild("id").equalTo(id);
+        Query query = database.getReference("user/").orderByChild("id").equalTo(id);
+
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

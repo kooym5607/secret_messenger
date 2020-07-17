@@ -1,9 +1,12 @@
 package edu.project.secret_messenger.object;
 
+import java.util.Map;
+
 public class User {
     private String id;
     private String pw;
     private String name;
+    private Map<String,String> chatroom;
 
     public User(){}
 
@@ -20,4 +23,7 @@ public class User {
 
     public String getPw() { return pw;}
 
+    public Map<String, String> getChatroom() { return chatroom; }
+
+    public void setChatroom(Map<String, String> chatroom) { this.chatroom = chatroom; }
 }

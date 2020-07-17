@@ -6,9 +6,9 @@
     tools:context=".fragment.chatlistFragment">
 
 
-    <TextView
+    <ListView
+        android:id="@+id/chat_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|center_vertical" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

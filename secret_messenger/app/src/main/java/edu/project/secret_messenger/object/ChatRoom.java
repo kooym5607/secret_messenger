@@ -1,14 +1,45 @@
 package edu.project.secret_messenger.object;
 
-public class ChatRoom {
-    private ChatDTO chatDTO;
-    private String roomUid;
+import com.google.firebase.database.Exclude;
 
-    ChatRoom() { }
-    ChatRoom(ChatDTO chatDTO, String roomUid) { this.chatDTO = chatDTO;this.roomUid = roomUid; }
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ChatRoom {
+    private String roomUid;
+    private String title;
+    private String lastMsg;
+    private Map<String, String> users;
+    private User user;
+
+    public ChatRoom() { }
+    public ChatRoom(Map<String, String> users){ this.users = users;}
+    public ChatRoom(User user){this.user = user;}
+    public String getUserName(User mUser){
+        String result = null;
+        for(String key: users.keySet()) {
+            if (!key.equals(mUser.getId())) {
+                result = users.get(key);
+            }
+        }
+        return result;
+    }
+
     public String getRoomUid() { return roomUid; }
     public void setRoomUid(String roomUid) { this.roomUid = roomUid; }
-    public ChatDTO getChatDTO() { return chatDTO; }
-    public void setChatDTO(ChatDTO chatDTO) { this.chatDTO = chatDTO; }
+
+    public String getLastMsg() { return lastMsg; }
+    public void setLastMsg(String lastMsg) { this.lastMsg = lastMsg; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    @Exclude
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("users", users);
+        result.put("lastMsg", lastMsg);
+        return result;
+    }
 }
 

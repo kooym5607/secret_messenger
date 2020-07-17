@@ -22,22 +22,29 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.project.secret_messenger.R;
+import edu.project.secret_messenger.object.ChatRoom;
 import edu.project.secret_messenger.object.User;
 
 public class userlistFragment extends Fragment {
     private static final String TAG = "userListFragment";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference ref = database.getReference();
     private ListView listView;
-    private ArrayList<User> userArrayList = new ArrayList<User>();;
+    private ArrayList<User> userArrayList = new ArrayList<User>();
     private String myID;
     private Query query;
+    private User mUser;
+    private User chatUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +61,7 @@ public class userlistFragment extends Fragment {
 
                     if(user.getId().equals(myID)) {
                         Log.e(TAG, "로그인한 사용자 : "+myID + " 제외");
+                        mUser = user;
                         continue;
                     }
                     else
@@ -66,7 +74,7 @@ public class userlistFragment extends Fragment {
                     @Override
                     public void onItemClick(final AdapterView<?> parent, View view, int position, long l) {
                         ListView listView = (ListView) parent;
-                        final User user = (User) listView.getItemAtPosition(position);
+                        chatUser = (User) listView.getItemAtPosition(position);
                         PopupMenu popup = new PopupMenu(parent.getContext(),listView);
                         MenuInflater inf = popup.getMenuInflater();
                         inf.inflate(R.menu.usermenu, popup.getMenu());
@@ -74,10 +82,30 @@ public class userlistFragment extends Fragment {
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem menuItem) {
+                                Toast.makeText(parent.getContext(), chatUser.getName()+"과 채팅하기", Toast.LENGTH_SHORT).show();
                                 /**
                                  * 사용자 채팅 클릭이벤트
                                  */
-                                Toast.makeText(parent.getContext(), user.getName()+"과 채팅하기", Toast.LENGTH_SHORT).show();
+                                Map<String, String> users = new HashMap<>();
+                                users.put(mUser.getId(),mUser.getName());
+                                users.put(chatUser.getId(),chatUser.getName());
+
+                                ChatRoom chatRoom = new ChatRoom(users);
+
+                                ref = database.getReference().child("chatroom");
+                                String key = ref.push().getKey();
+                                chatRoom.setRoomUid(key);
+                                Map<String, Object> roomValues = chatRoom.toMap();
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                childUpdates.put(key, roomValues);
+                                ref.updateChildren(childUpdates);
+                                Map<String, Object> chatroomUpdate = new HashMap<>();
+                                chatroomUpdate.put(key,key);
+
+                                ref = database.getReference("user").child(mUser.getId()).child("chatroom");
+                                ref.updateChildren(chatroomUpdate);
+                                ref = database.getReference("user").child(chatUser.getId()).child("chatroom");
+                                ref.updateChildren(chatroomUpdate);
                                 return false;
                             }
                         });

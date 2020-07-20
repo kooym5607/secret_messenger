@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
-import edu.project.secret_messenger.fragment.chatlistFragment;
+import edu.project.secret_messenger.fragment.chatroomlistFragment;
 import edu.project.secret_messenger.fragment.userlistFragment;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class LobbyActivity extends AppCompatActivity {
         bundle.putString("myID",value);
         userlistFragment userlistFragment = new userlistFragment();
         userlistFragment.setArguments(bundle);
-        chatlistFragment chatlistFragment = new chatlistFragment();
+        chatroomlistFragment chatlistFragment = new chatroomlistFragment();
         chatlistFragment.setArguments(bundle);
 
         tabLayout = findViewById(R.id.tabLayout);

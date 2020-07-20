@@ -1,6 +1,7 @@
 package edu.project.secret_messenger.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,25 +31,28 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.project.secret_messenger.LobbyActivity;
+import edu.project.secret_messenger.LoginActivity;
 import edu.project.secret_messenger.R;
+import edu.project.secret_messenger.chatActivity;
 import edu.project.secret_messenger.object.ChatRoom;
 import edu.project.secret_messenger.object.User;
 
-public class chatlistFragment extends Fragment {
-    private static final String TAG = "chatListFragment";
+public class chatroomlistFragment extends Fragment {
+    private static final String TAG = "chatRoomListFragment";
     private String myID;
     private User mUser;
+    private String chatUserID;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference ref = database.getReference("user");
     private Query query;
     private ChatRoom chatRoom;
     private ArrayList<ChatRoom> chatRooms = new ArrayList<ChatRoom>();
     private ListView listView;
-    private ArrayList<String> title = new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.e(TAG, "ChatListFragment OnCreateView()");
+        Log.e(TAG, "ChatRoomListFragment OnCreateView()");
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_chatlist, container, false);
         myID= getArguments().getString("myID");
 
@@ -74,21 +78,24 @@ public class chatlistFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     chatRoom = new ChatRoom(mUser);
                                     chatRoom.setRoomUid(key);
-                                    String title = null;
                                     for(DataSnapshot snap: snapshot.getChildren()){
                                         if(!snap.getKey().equals(mUser.getId())) {
-                                            title = snap.getValue(String.class);
+                                            chatUserID = snap.getValue(String.class);
                                         }
                                     }
-                                    chatRoom.setTitle(title);
+                                    chatRoom.setTitle(chatUserID);
                                     chatRooms.add(chatRoom);
                                     listView = (ListView)layout.findViewById(R.id.chat_listView);
-                                    ChatListAdapter chatListAdapter = new ChatListAdapter(getActivity(),R.layout.chatroom_list_row,chatRooms);
-                                    listView.setAdapter(chatListAdapter);
+                                    ChatRoomListAdapter chatRoomListAdapter = new ChatRoomListAdapter(getActivity(),R.layout.chatroom_list_row,chatRooms);
+                                    listView.setAdapter(chatRoomListAdapter);
                                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                            Intent intent = new Intent(getContext(), chatActivity.class);
+                                            intent.putExtra("roomID",chatRooms.get(i).getRoomUid());
+                                            intent.putExtra("mUserID",myID);
 
+                                            startActivity(intent);
                                         }
                                     });
                                 }
@@ -115,11 +122,11 @@ public class chatlistFragment extends Fragment {
     }
 
 
-    private class ChatListAdapter extends ArrayAdapter<ChatRoom> {
+    private class ChatRoomListAdapter extends ArrayAdapter<ChatRoom> {
         private ArrayList<ChatRoom> items;
         private ChatRoom chatRoom;
 
-        public ChatListAdapter(Context context, int textViewResourceId, ArrayList<ChatRoom> items) {
+        public ChatRoomListAdapter(Context context, int textViewResourceId, ArrayList<ChatRoom> items) {
             super(context, textViewResourceId, items);
             this.items = items;
         }
@@ -157,7 +164,7 @@ public class chatlistFragment extends Fragment {
             return view;
         }
     }
-    public chatlistFragment() { }
+    public chatroomlistFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.chatroomlistFragment">
-
-
-    <ListView
-        android:id="@+id/chat_listView"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/fragment_chat"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
+        <ListView
+            android:transcriptMode="alwaysScroll"
+            android:layout_weight="0.93"
+            android:id="@+id/chat_listView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:stackFromBottom="true"/>
+
+        <LinearLayout
+            android:layout_weight="0.07"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:weightSum="1">
+            <EditText
+                android:id="@+id/chat_edit"
+                android:layout_weight="0.85"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="10dp"
+                android:hint="채팅 입력"/>
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_weight="0.15"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="전송"/>
+
+        </LinearLayout>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀메시지"
+            android:textSize="8dp"
+            android:id="@+id/enc_check"/>
+
+    </LinearLayout>
 </FrameLayout>

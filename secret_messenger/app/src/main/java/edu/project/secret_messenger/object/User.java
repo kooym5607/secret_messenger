@@ -6,7 +6,6 @@ public class User {
     private String id;
     private String pw;
     private String name;
-    private Map<String,String> chatroom;
 
     public User(){}
 
@@ -18,12 +17,7 @@ public class User {
     public void setPw(String pw){ this.pw = pw;}
     public void setName(String name){ this.name = name;}
     public String getId() { return id;}
-
     public String getName() { return name;}
-
     public String getPw() { return pw;}
 
-    public Map<String, String> getChatroom() { return chatroom; }
-
-    public void setChatroom(Map<String, String> chatroom) { this.chatroom = chatroom; }
 }

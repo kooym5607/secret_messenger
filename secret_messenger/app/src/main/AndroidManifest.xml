@@ -26,7 +26,6 @@
         </activity>
         <activity android:name=".signupActivity"/>
         <activity android:name=".LobbyActivity"/>
-        <activity android:name=".chatActivity"/>
     </application>
 
 </manifest>

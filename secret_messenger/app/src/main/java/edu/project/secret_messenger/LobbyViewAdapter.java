@@ -7,13 +7,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-import edu.project.secret_messenger.fragment.chatroomlistFragment;
+import edu.project.secret_messenger.fragment.chatFragment;
 import edu.project.secret_messenger.fragment.userlistFragment;
 
 public class LobbyViewAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> items;
 
-    public LobbyViewAdapter(FragmentManager fm, userlistFragment user, chatroomlistFragment chat){
+    public LobbyViewAdapter(FragmentManager fm, userlistFragment user, chatFragment chat){
         super(fm);
         items = new ArrayList<Fragment>();
         items.add(user);
@@ -30,4 +30,8 @@ public class LobbyViewAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return items.size();
     }
+
+
+
+
 }

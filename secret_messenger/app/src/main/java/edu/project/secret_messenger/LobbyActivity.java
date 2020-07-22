@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
-import edu.project.secret_messenger.fragment.chatroomlistFragment;
+import edu.project.secret_messenger.fragment.chatFragment;
 import edu.project.secret_messenger.fragment.userlistFragment;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -23,24 +23,38 @@ public class LobbyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String value = intent.getStringExtra("myID");
         bundle.putString("myID",value);
+
         userlistFragment userlistFragment = new userlistFragment();
         userlistFragment.setArguments(bundle);
-        chatroomlistFragment chatlistFragment = new chatroomlistFragment();
-        chatlistFragment.setArguments(bundle);
+        chatFragment chatFragment = new chatFragment();
+        chatFragment.setArguments(bundle);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
-        lobbyViewAdapter = new LobbyViewAdapter(getSupportFragmentManager(),userlistFragment,chatlistFragment);
+        lobbyViewAdapter = new LobbyViewAdapter(getSupportFragmentManager(),userlistFragment,chatFragment);
         viewPager.setAdapter(lobbyViewAdapter);
 
 
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout){
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 1:
+                        refresh();
+                        break;
+                    case 2:
+                        refresh();
+                        break;
+                }
+
+            }
+        });
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 viewPager.setCurrentItem(tab.getPosition());
+                refresh();
             }
 
             @Override
@@ -53,5 +67,9 @@ public class LobbyActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void refresh() {
+        lobbyViewAdapter.notifyDataSetChanged();
     }
 }

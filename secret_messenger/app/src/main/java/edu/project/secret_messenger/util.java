@@ -4,6 +4,9 @@ import java.io.PrintStream;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class util {
     public static final char[] HEX_DIGITS = {
@@ -65,5 +68,15 @@ public class util {
             throw new InvalidKeyException(e);
         }
     }
-
+    public long DateToMill(String date) {
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        Date trans_date = null;
+        try {
+            trans_date = formatter.parse(date);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block e.printStackTrace(); }
+        }
+        return trans_date.getTime();
+    }
 }

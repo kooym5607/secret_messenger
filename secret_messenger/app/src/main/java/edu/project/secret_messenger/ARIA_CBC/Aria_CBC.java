@@ -7,7 +7,7 @@ import static edu.project.secret_messenger.util.*;
 
 public class Aria_CBC {
     final static int keySize = 256;
-    protected static byte[][] CBC_enc(ARIAEngine aria, byte[] primeVec, byte[][] plain_block,boolean isEnc) throws InvalidKeyException {
+    protected static byte[][] CBC_enc(ARIAEngine aria, byte[] primeVec, byte[][] plain_block) throws InvalidKeyException {
         byte[] xor = new byte[16];
         byte[][] cipher_block = new byte[10][16];
         for (int i = 0; i < plain_block.length; i++) { // 초기 벡터와 이전 암호문을 이용한 xor.
@@ -24,7 +24,6 @@ public class Aria_CBC {
                 aria.encrypt(xor, 0, cipher_block[i], 0);
             }
         }
-        isEnc = true;
         return plain_block;
     }
     protected static byte[][] CBC_dec(ARIAEngine aria, byte[] primeVec, byte[][] cipher_block) throws InvalidKeyException {
@@ -44,7 +43,6 @@ public class Aria_CBC {
     public static void CBC(String plainText, String key, String primeVector) throws InvalidKeyException {
         byte[][] plain_block;
         byte[][] cipher_block;
-        boolean isEnc = false;
 
         byte[] primeVec = hexStringToByteArray(primeVector.replaceAll(" ", ""));
 
@@ -54,10 +52,8 @@ public class Aria_CBC {
         aria.setupRoundKeys();
 
         //CBC모드 암호화
-        cipher_block = CBC_enc(aria,primeVec,plain_block,isEnc);
+        cipher_block = CBC_enc(aria,primeVec,plain_block);
 
-        if(isEnc==true)
-            // 메세지 암호걸기
 
 
         //CBC모드 복호화

@@ -37,12 +37,22 @@
                 android:text="전송"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀메시지"
             android:textSize="8dp"
-            android:id="@+id/enc_check"/>
-
+            android:id="@+id/enc_check"
+            android:layout_marginRight="10dp"/>
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="비밀키"
+            android:textSize="9dp"
+            android:id="@+id/encKey"/>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

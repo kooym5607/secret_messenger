@@ -1,8 +1,6 @@
 package edu.project.secret_messenger.ARIA_CBC;
 
-import java.io.PrintStream;
 import java.security.InvalidKeyException;
-import java.util.Scanner;
 import static edu.project.secret_messenger.util.*;
 
 public class Aria_CBC {

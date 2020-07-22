@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.project.secret_messenger.ARIA_CBC.Aria_CBC;
+import edu.project.secret_messenger.LoginActivity;
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.ChatDTO;
 
@@ -66,32 +68,41 @@ public class chatFragment extends Fragment {
         listView = (ListView)layout.findViewById(R.id.chat_listView);
         chatListAdapter = new ChatListAdapter(getContext(),R.layout.chat_list_row,chatDTOs);
         listView.setAdapter(chatListAdapter);
+        enc_CheckBox = (CheckBox)layout.findViewById(R.id.enc_check);
+        encKeyEdit = (EditText)layout.findViewById(R.id.encKey);
+        chatEdit = (EditText)layout.findViewById(R.id.chat_edit);
+        sendButton = (Button)layout.findViewById(R.id.sendButton);
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        myID = getArguments().getString("myID");
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() { // 채팅 길게 클릭했을 때 클릭 리스너
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Log.e(TAG,"listview LongClick");
+                /** Todo 길게 클릭 시 삭제 / (암호문일 때 복호화하기) 메뉴 뜨게 하기 ;}
+                 *
+                 */
+                //메세지 삭제
+                if(chatDTOs.get(position).getUserID().equals(myID)){ // 선택한 채팅이 사용자가 작성한 것인지 확인 후 삭제.
+                    String msgUid =chatDTOs.get(position).getMsgUID();
+                    chatDTOs.remove(position);
+                    chatListAdapter.notifyDataSetChanged();
 
-                String msgUid =chatDTOs.get(position).getMsgUID();
-                chatDTOs.remove(position);
-                chatListAdapter.notifyDataSetChanged();
+                    ref = database.getReference("messages").child(msgUid);
+                    ref.removeValue();
 
-                ref = database.getReference("messages").child(msgUid);
-                ref.removeValue();
+                    listView.clearChoices();
+                }
+                else
+                    Toast.makeText(getContext(), "이 채팅의 사용자가 아니여서 삭제 불가", Toast.LENGTH_SHORT).show();
 
-                listView.clearChoices();
                 return true;
             }
-
         });
 
-        enc_CheckBox = (CheckBox)layout.findViewById(R.id.enc_check);
 
-
-        myID = getArguments().getString("myID");
-        ref = database.getReference();
-        query= ref.child("user").child(myID);
-        query.addValueEventListener(new ValueEventListener() {
+        ref = database.getReference("user").child(myID);
+        ref.addValueEventListener(new ValueEventListener() { // 사용자 ID로부터 이름을 받아옴
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUserName = snapshot.child("name").getValue(String.class);
@@ -100,23 +111,22 @@ public class chatFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        encKeyEdit = (EditText)layout.findViewById(R.id.encKey);
-        chatEdit = (EditText)layout.findViewById(R.id.chat_edit);
-        sendButton = (Button)layout.findViewById(R.id.sendButton);
-        sendButton.setOnClickListener(new View.OnClickListener() {
+
+        sendButton.setOnClickListener(new View.OnClickListener() { // 전송 버튼 클릭 리스너
             @Override
             public void onClick(View view) {
                 if(enc_CheckBox.isChecked())
                     is_Enc = true;
                 else
                     is_Enc = false;
+
                 ref = database.getReference("messages");
                 String msgUid = ref.push().getKey();
                 message = chatEdit.getText().toString();
                 if(is_Enc==true){
                     encKey = encKeyEdit.getText().toString();
-                    /** Todo
-                     * ARIA_CBC를 이용하여 message 암호화.
+                    /** Todo ARIA_CBC를 이용하여 message 암호화. ;}
+                     *
                      */
                 }
 
@@ -135,7 +145,7 @@ public class chatFragment extends Fragment {
             }
         });
         ref = database.getReference("messages");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() { // 처음 채팅목록 받아오기
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(chatListAdapter!=null)
@@ -157,7 +167,7 @@ public class chatFragment extends Fragment {
 
             }
         });
-        ref.addChildEventListener(new ChildEventListener() {
+        ref.addChildEventListener(new ChildEventListener() { // 채팅이 추가/삭제 될 때 마다 리스트어댑터에 추가/삭제
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 chatListAdapter.add(snapshot.getValue(ChatDTO.class));
@@ -183,7 +193,6 @@ public class chatFragment extends Fragment {
 
             }
         });
-
 
         return layout;
     }
@@ -212,11 +221,9 @@ public class chatFragment extends Fragment {
 
                 if(chatMsg != null){
                     if(chatDTO.getIs_Enc()==false){
-
                         chatMsg.setText(chatDTO.getMessage());
                     }
                     else {
-                        Log.e(TAG,"비밀메시지");
                         chatMsg.setText("비밀메시지입니다.");
                     }
                 }

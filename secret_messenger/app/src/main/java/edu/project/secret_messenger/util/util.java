@@ -1,4 +1,4 @@
-package edu.project.secret_messenger;
+package edu.project.secret_messenger.util;
 
 import android.text.InputFilter;
 import android.text.Spanned;

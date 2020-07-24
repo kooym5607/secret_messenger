@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 import edu.project.secret_messenger.object.User;
 
-import static edu.project.secret_messenger.util.*;
+import static edu.project.secret_messenger.util.util.*;
 
 public class signupActivity extends AppCompatActivity {
     private EditText idEdit;

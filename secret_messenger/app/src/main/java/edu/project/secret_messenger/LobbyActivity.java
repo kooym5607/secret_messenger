@@ -5,11 +5,15 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
 
 import edu.project.secret_messenger.fragment.chatFragment;
 import edu.project.secret_messenger.fragment.userlistFragment;
+import edu.project.secret_messenger.util.SaveSharedPreference;
 
 public class LobbyActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -68,7 +72,25 @@ public class LobbyActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.usermenu,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.logout:
+                SaveSharedPreference.logOut(getApplicationContext());
+                Intent intent = new Intent(LobbyActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                LobbyActivity.this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void refresh() {
         lobbyViewAdapter.notifyDataSetChanged();
     }

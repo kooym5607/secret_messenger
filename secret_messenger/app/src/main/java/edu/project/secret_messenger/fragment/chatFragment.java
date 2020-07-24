@@ -1,8 +1,13 @@
 package edu.project.secret_messenger.fragment;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -23,6 +28,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.ChildEventListener;
@@ -41,8 +48,11 @@ import java.util.Map;
 import android.text.InputFilter;
 
 import edu.project.secret_messenger.ARIA_CBC.Aria_CBC;
+import edu.project.secret_messenger.LobbyActivity;
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.ChatDTO;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class chatFragment extends Fragment {
     private static final String TAG = "chatFragment";
@@ -54,6 +64,9 @@ public class chatFragment extends Fragment {
     private CheckBox enc_CheckBox;
     private Button sendButton;
     private ListView listView;
+    private NotificationManager notificationManager;
+    private Notification noti;
+    private NotificationChannel notificationChannel;
 
     private ChatDTO chatDTO;
     private ArrayList<ChatDTO> chatDTOs = new ArrayList<ChatDTO>();
@@ -230,7 +243,7 @@ public class chatFragment extends Fragment {
                 Map<String,Object> childUpdates = new HashMap<>();
                 childUpdates.put(msgUid,chatValues);
                 ref.updateChildren(childUpdates);
-
+                msgNoti(chatDTO);
                 chatEdit.setText("");
                 encKeyEdit.setText("");
                 enc_CheckBox.setChecked(false);
@@ -291,7 +304,40 @@ public class chatFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+    /**
+     * Todo 메시지가 올 시 상단 알림
+     */
+    public void msgNoti(ChatDTO chatDTO){
+        String notiUserName = chatDTO.getUserName();
+        String notiMessage = chatDTO.getMessage();
+        boolean noti_isEnc = chatDTO.getIs_Enc();
+        if(noti_isEnc)
+            notiMessage = "비밀 메시지";
 
+
+        notificationManager = (NotificationManager)getContext().getSystemService(NOTIFICATION_SERVICE);
+        notificationChannel = new NotificationChannel("noti_channel","channel",NotificationManager.IMPORTANCE_DEFAULT);
+        notificationChannel.setDescription("알림 테스트");
+        notificationManager.createNotificationChannel(notificationChannel);
+//        Intent notiIconClickIntent = new Intent(getContext(),LobbyActivity.class);
+//        notiIconClickIntent.putExtra("pendingIntent","notiIntent")
+//                .setAction(Intent.ACTION_MAIN)
+//                .addCategory(Intent.CATEGORY_LAUNCHER);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
+//        stackBuilder.addParentStack(LobbyActivity.class);
+//        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        noti = new NotificationCompat.Builder(getContext(),"noti_channel")
+                .setDefaults(Notification.DEFAULT_LIGHTS)
+                .setSmallIcon(R.drawable.noti_icon)
+                .setContentTitle(notiUserName)
+                .setContentText(notiMessage)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                .build();
+        notificationManager.notify(1234,noti);
+    }
 }
 class ByteLengthFilter implements InputFilter {
     private String mCharset; // 인코딩 문자셋
@@ -369,8 +415,6 @@ class ByteLengthFilter implements InputFilter {
         }
         return mMaxByte - (getByteLength(expected) - expected.length());
     }
-
-
 
     /**
      * 문자열의 바이트 길이. 인코딩 문자셋에 따라 바이트 길이 달라짐.

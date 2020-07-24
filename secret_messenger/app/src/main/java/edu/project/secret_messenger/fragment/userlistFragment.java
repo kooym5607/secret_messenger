@@ -143,6 +143,8 @@ public class userlistFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    /**
+     * Todo 사용자 로그인 상태 확인 (User 객체에 isLogin 생성, 로그인할 때 true, 로그아웃할 때 false ;}
+     */
 
 }

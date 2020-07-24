@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -21,7 +22,6 @@ public class LobbyActivity extends AppCompatActivity {
     private LobbyViewAdapter lobbyViewAdapter;
     private TabLayout tabLayout;
     private Bundle bundle = new Bundle();
-    private boolean is_logout;
     private userlistFragment userlistFragment = new userlistFragment();
     private chatFragment chatFragment = new chatFragment();
     @Override
@@ -31,7 +31,11 @@ public class LobbyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String value = intent.getStringExtra("myID");
         bundle.putString("myID",value);
+        String noti = getIntent().getStringExtra("pendingIntent");
 
+        if(noti!=null)
+            if(noti.equals("notiIntent"))
+                viewPager.setCurrentItem(2);
 
         userlistFragment.setArguments(bundle);
         chatFragment.setArguments(bundle);
@@ -86,6 +90,7 @@ public class LobbyActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.logout:
                 SaveSharedPreference.logOut(getApplicationContext());
+                Toast.makeText(getApplicationContext(), "종료합니다",Toast.LENGTH_SHORT).show();
                 android.os.Process.killProcess(android.os.Process.myPid());
                 return true;
         }

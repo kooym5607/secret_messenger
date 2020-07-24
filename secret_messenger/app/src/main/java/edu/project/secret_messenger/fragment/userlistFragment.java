@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +28,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import edu.project.secret_messenger.LobbyActivity;
+import edu.project.secret_messenger.OnBackPressedListener;
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.User;
+import edu.project.secret_messenger.util.SaveSharedPreference;
 
 public class userlistFragment extends Fragment {
     private static final String TAG = "userListFragment";
@@ -42,6 +46,7 @@ public class userlistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_userlist, container, false);
+
         if(userArrayList!=null)
             userArrayList.clear();
         listView = (ListView)layout.findViewById(R.id.user_listView);
@@ -54,7 +59,7 @@ public class userlistFragment extends Fragment {
             }
         });
 
-        myID = getArguments().getString("myID");
+        myID = SaveSharedPreference.getId(this.getContext());
         Log.w(TAG, "로그인한 사용자 : "+myID);
         query = ref.child("user/");
 

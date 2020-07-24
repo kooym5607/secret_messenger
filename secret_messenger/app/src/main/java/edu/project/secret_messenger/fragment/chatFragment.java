@@ -49,8 +49,10 @@ import android.text.InputFilter;
 
 import edu.project.secret_messenger.ARIA_CBC.Aria_CBC;
 import edu.project.secret_messenger.LobbyActivity;
+import edu.project.secret_messenger.OnBackPressedListener;
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.ChatDTO;
+import edu.project.secret_messenger.util.SaveSharedPreference;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -83,6 +85,8 @@ public class chatFragment extends Fragment {
                              Bundle savedInstanceState) {
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_chatlist, container, false);
         listView = (ListView)layout.findViewById(R.id.chat_listView);
+        if(chatDTOs!=null)
+            chatDTOs.clear();
         chatListAdapter = new ChatListAdapter(getContext(),R.layout.chat_list_row,chatDTOs);
         listView.setAdapter(chatListAdapter);
         enc_CheckBox = (CheckBox)layout.findViewById(R.id.enc_check);
@@ -92,7 +96,7 @@ public class chatFragment extends Fragment {
         sendButton = (Button)layout.findViewById(R.id.sendButton);
         // 뷰 id 지정
 
-        myID = getArguments().getString("myID");
+        myID = SaveSharedPreference.getId(this.getContext());
 
         ref = database.getReference("user").child(myID);
         ref.addListenerForSingleValueEvent(new ValueEventListener() { // 사용자 ID로부터 이름을 받아옴
@@ -243,7 +247,7 @@ public class chatFragment extends Fragment {
                 Map<String,Object> childUpdates = new HashMap<>();
                 childUpdates.put(msgUid,chatValues);
                 ref.updateChildren(childUpdates);
-                msgNoti(chatDTO);
+                msgNoti(getContext(),chatDTO);
                 chatEdit.setText("");
                 encKeyEdit.setText("");
                 enc_CheckBox.setChecked(false);
@@ -307,7 +311,7 @@ public class chatFragment extends Fragment {
     /**
      * Todo 메시지가 올 시 상단 알림
      */
-    public void msgNoti(ChatDTO chatDTO){
+    public void msgNoti(Context context, ChatDTO chatDTO){
         String notiUserName = chatDTO.getUserName();
         String notiMessage = chatDTO.getMessage();
         boolean noti_isEnc = chatDTO.getIs_Enc();
@@ -315,26 +319,26 @@ public class chatFragment extends Fragment {
             notiMessage = "비밀 메시지";
 
 
-        notificationManager = (NotificationManager)getContext().getSystemService(NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
         notificationChannel = new NotificationChannel("noti_channel","channel",NotificationManager.IMPORTANCE_DEFAULT);
         notificationChannel.setDescription("알림 테스트");
         notificationManager.createNotificationChannel(notificationChannel);
-//        Intent notiIconClickIntent = new Intent(getContext(),LobbyActivity.class);
-//        notiIconClickIntent.putExtra("pendingIntent","notiIntent")
-//                .setAction(Intent.ACTION_MAIN)
-//                .addCategory(Intent.CATEGORY_LAUNCHER);
-//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
-//        stackBuilder.addParentStack(LobbyActivity.class);
-//        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent notiIconClickIntent = new Intent(context,LobbyActivity.class);
+        notiIconClickIntent.putExtra("pendingIntent","notiIntent");
+        notiIconClickIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(LobbyActivity.class);
+        stackBuilder.addNextIntent(notiIconClickIntent);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        noti = new NotificationCompat.Builder(getContext(),"noti_channel")
+        noti = new NotificationCompat.Builder(context,"noti_channel")
                 .setDefaults(Notification.DEFAULT_LIGHTS)
                 .setSmallIcon(R.drawable.noti_icon)
                 .setContentTitle(notiUserName)
                 .setContentText(notiMessage)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
-//                .setContentIntent(pendingIntent)
+                .setContentIntent(pendingIntent)
                 .build();
         notificationManager.notify(1234,noti);
     }

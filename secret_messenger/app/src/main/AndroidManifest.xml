@@ -21,11 +21,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"/>
 
-        </activity>
         <activity android:name=".signupActivity"/>
-        <activity android:name=".LobbyActivity"/>
+        <activity android:name=".LobbyActivity"
+            android:launchMode="singleTask"
+            android:excludeFromRecents="true"/>
     </application>
 
 </manifest>

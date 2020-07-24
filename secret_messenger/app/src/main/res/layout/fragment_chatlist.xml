@@ -52,7 +52,9 @@
             android:layout_height="wrap_content"
             android:hint="비밀키"
             android:textSize="9dp"
-            android:id="@+id/encKey"/>
+            android:id="@+id/encKey"
+            android:inputType="textPassword"
+            android:maxLines="1"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

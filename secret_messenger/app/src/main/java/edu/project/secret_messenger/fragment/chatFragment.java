@@ -28,10 +28,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.security.InvalidKeyException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,9 +37,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.project.secret_messenger.ARIA_CBC.Aria_CBC;
-import edu.project.secret_messenger.LoginActivity;
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.ChatDTO;
+
+import static edu.project.secret_messenger.util.*;
 
 public class chatFragment extends Fragment {
     private static final String TAG = "chatFragment";
@@ -63,6 +62,8 @@ public class chatFragment extends Fragment {
     private Date msg_Time;
     private String encKey;
     private boolean is_Enc;
+    private Aria_CBC aria;
+    private byte[] primeVec = hexStringToByteArray("0f 1e 2d 3c 4b 5a 69 78 87 96 a5 b4 c3 d2 e1 f0".replaceAll(" ", ""));;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,9 +148,7 @@ public class chatFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Log.e(TAG,"listview LongClick");
-                /** Todo 길게 클릭 시 삭제 / (암호문일 때 복호화하기) 메뉴 뜨게 하기 ;}
-                 *
-                 */
+
                 final int pos = position;
                 final CharSequence[] items = {"삭제","비밀메시지 보기"};
                 AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext(),android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
@@ -172,7 +171,26 @@ public class chatFragment extends Fragment {
                                     Toast.makeText(getContext(), "이 채팅의 사용자가 아니여서 삭제 불가", Toast.LENGTH_SHORT).show();
                                 break;
                             case 1:
-                                Toast.makeText(getContext(), "미구현", Toast.LENGTH_SHORT).show();
+                                if(chatDTOs.get(pos).getIs_Enc()==true){ // 비밀메시지인지 확인 후 복호화
+                                    final EditText decKeytext = new EditText(getView().getContext());
+                                    AlertDialog.Builder decKeyDialog = new AlertDialog.Builder(getView().getContext(),android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                                    decKeyDialog.setTitle("비밀번호");
+                                    decKeyDialog.setView(decKeytext);
+                                    decKeyDialog.setPositiveButton("입력",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    encKey = decKeytext.getText().toString();
+                                                    aria = new Aria_CBC(encKey);
+                                                    String cipherMsg = chatDTOs.get(pos).getMessage();
+                                                    String plain=aria.Decrypt(cipherMsg);
+                                                    Log.e(TAG,"복호화한 문장: "+plain);
+                                                }
+                                            });
+                                    decKeyDialog.show();
+                                }
+                                else
+                                    Toast.makeText(getContext(), "비밀메시지가 아닙니다", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -193,17 +211,15 @@ public class chatFragment extends Fragment {
                 ref = database.getReference("messages");
                 String msgUid = ref.push().getKey();
                 message = chatEdit.getText().toString();
-                if(is_Enc==true){
-                    encKey = encKeyEdit.getText().toString();
-                    /** Todo ARIA_CBC를 이용하여 message 암호화. ;}
-                     *
-                     */
-                }
-
                 msg_Time = new Date();
-
-                Log.e(TAG,"시간은 : "+msg_Time);
-                chatDTO = new ChatDTO(msgUid,myID,message,mUserName,msg_Time,is_Enc);
+                if(is_Enc==true){ // 비밀메시지 체크가 되어있으면 암호화하여 DB에 저장.
+                    encKey = encKeyEdit.getText().toString();
+                    aria = new Aria_CBC(encKey);
+                    String cipher = aria.Encrypt(message);
+                    chatDTO = new ChatDTO(msgUid,myID,cipher,mUserName,msg_Time,is_Enc);
+                }
+                else
+                    chatDTO = new ChatDTO(msgUid,myID,message,mUserName,msg_Time,is_Enc);
 
                 Map<String,Object> chatValues = chatDTO.toMap();
                 Map<String,Object> childUpdates = new HashMap<>();
@@ -211,6 +227,7 @@ public class chatFragment extends Fragment {
                 ref.updateChildren(childUpdates);
 
                 chatEdit.setText("");
+                encKeyEdit.setText("");
                 enc_CheckBox.setChecked(false);
             }
         });

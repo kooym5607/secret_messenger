@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.InvalidKeyException;
+import java.util.regex.Pattern;
 
 import static edu.project.secret_messenger.util.*;
 
@@ -42,7 +45,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         idEdit = (EditText)findViewById(R.id.login_id);
+        idEdit.setFilters(new InputFilter[]{filterAlphaNum});
         pwEdit = (EditText)findViewById(R.id.login_password);
+        pwEdit.setFilters(new InputFilter[]{filterAlphaNum});
         loginBtn = (Button)findViewById(R.id.login_button);
         signupBtn = (Button)findViewById(R.id.signup_button);
 
@@ -131,5 +136,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+    protected InputFilter filterAlphaNum = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
+
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
 
 }

@@ -1,5 +1,7 @@
 package edu.project.secret_messenger;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 
 import java.io.PrintStream;
@@ -10,8 +12,72 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
+
+class textFilter{
+    // 영문만 허용
+    protected InputFilter filterAlpha = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z]+$");
+
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
+
+    // 영문만 허용 (숫자 포함)
+    protected InputFilter filterAlphaNum = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
+
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
+
+    // 한글만 허용
+    public InputFilter filterKor = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[ㄱ-ㅎ가-힣]+$");
+
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
 
 
+    //한글, 숫자, 영어 허용
+    protected InputFilter filterKoEnNum = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9ㄱ-ㅎ가-힣]+$");
+
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
+
+    //한글, 숫자, 영어소문자, 띄어쓰기 허용
+    protected InputFilter filterKoEnNum2 = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            if(source.equals("")){ // for backspace
+                return source;
+            }
+            if(source.toString().matches("[a-z0-9ㄱ-ㅎ가-힣 ]+")){
+                return source;
+            }
+            Log.e("TAG", "특수문자 및 영문대문자는 입력하실 수 없습니다.");
+            return "";
+        }
+    };
+}
 public class util {
     private static final String TAG = "util";
     public static final char[] HEX_DIGITS = {
@@ -132,16 +198,4 @@ public class util {
         return total;
     }
 
-
-    public long DateToMill(String date) {
-        String pattern = "yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-        Date trans_date = null;
-        try {
-            trans_date = formatter.parse(date);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block e.printStackTrace(); }
-        }
-        return trans_date.getTime();
-    }
 }

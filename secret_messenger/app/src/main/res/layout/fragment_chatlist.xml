@@ -54,7 +54,8 @@
             android:textSize="9dp"
             android:id="@+id/encKey"
             android:inputType="textPassword"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

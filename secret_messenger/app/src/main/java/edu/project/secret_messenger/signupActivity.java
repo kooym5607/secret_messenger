@@ -1,6 +1,8 @@
 package edu.project.secret_messenger;
 
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.InvalidKeyException;
+import java.util.regex.Pattern;
 
 import edu.project.secret_messenger.object.User;
 
@@ -38,8 +41,12 @@ public class signupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         idEdit = (EditText)findViewById(R.id.id_signup);
+        idEdit.setFilters(new InputFilter[]{filterAlphaNum});
         pwEdit = (EditText)findViewById(R.id.pw_signup);
+        pwEdit.setFilters(new InputFilter[]{filterAlphaNum});
         nameEdit = (EditText)findViewById(R.id.name_signup);
+        nameEdit.setFilters(new InputFilter[]{filterKoEnNum2});
+
         sameidBtn = (Button)findViewById(R.id.idsameBtn);
         sameidBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,4 +108,27 @@ public class signupActivity extends AppCompatActivity {
             }
         });
     }
+    protected InputFilter filterAlphaNum = new InputFilter() { //영어, 숫자 사용. 띄어쓰기 불가.
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
+
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
+    protected InputFilter filterKoEnNum2 = new InputFilter() { // 한글,영어,숫자 사용. 띄어쓰기 허용
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            if(source.equals("")){ // for backspace
+                return source;
+            }
+            if(source.toString().matches("[a-z0-9ㄱ-ㅎ가-힣 ]+")){
+                return source;
+            }
+
+            return "";
+        }
+    };
+
 }

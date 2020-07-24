@@ -1,6 +1,7 @@
 package edu.project.secret_messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -20,6 +21,9 @@ public class LobbyActivity extends AppCompatActivity {
     private LobbyViewAdapter lobbyViewAdapter;
     private TabLayout tabLayout;
     private Bundle bundle = new Bundle();
+    private boolean is_logout;
+    private userlistFragment userlistFragment = new userlistFragment();
+    private chatFragment chatFragment = new chatFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +32,8 @@ public class LobbyActivity extends AppCompatActivity {
         String value = intent.getStringExtra("myID");
         bundle.putString("myID",value);
 
-        userlistFragment userlistFragment = new userlistFragment();
+
         userlistFragment.setArguments(bundle);
-        chatFragment chatFragment = new chatFragment();
         chatFragment.setArguments(bundle);
 
         tabLayout = findViewById(R.id.tabLayout);
@@ -83,10 +86,7 @@ public class LobbyActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.logout:
                 SaveSharedPreference.logOut(getApplicationContext());
-                Intent intent = new Intent(LobbyActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                LobbyActivity.this.finish();
+                android.os.Process.killProcess(android.os.Process.myPid());
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -65,7 +65,6 @@ public class chatFragment extends Fragment {
     private String encKey;
     private boolean is_Enc;
     private Aria_CBC aria;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -184,7 +183,13 @@ public class chatFragment extends Fragment {
                                                     aria = new Aria_CBC(encKey);
                                                     String cipherMsg = chatDTOs.get(pos).getMessage();
                                                     String plain=aria.Decrypt(cipherMsg);
-                                                    Log.e(TAG,"복호화한 문장: "+plain);
+
+                                                    /** TODO 복호화하여 사용자에게 어떻게 표현할 것인지 ;}
+                                                     *
+                                                     */
+                                                    chatListAdapter.getItem(pos).setMessage(plain);
+                                                    Log.e(TAG,"복호화한 문장 얻기 : "+chatDTOs.get(pos).getMessage());
+                                                    chatListAdapter.notifyDataSetChanged();
                                                 }
                                             });
                                     decKeyDialog.show();

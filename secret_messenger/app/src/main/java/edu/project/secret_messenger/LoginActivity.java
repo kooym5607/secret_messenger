@@ -128,10 +128,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                         if(is_auto) {
                                             setAuto(getApplicationContext(),loginID,pw);
-//                                            SharedPreferences.Editor autoLogin = auto.edit();
-//                                            autoLogin.putString("inputId", loginID);
-//                                            autoLogin.putString("inputPw", pw);
-//                                            autoLogin.commit();
                                             Log.e(TAG, "자동로그인 활성화"+loginID+" "+pw);
                                         }
                                         startActivity(intent);

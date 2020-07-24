@@ -9,17 +9,13 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +26,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.User;
@@ -44,12 +38,12 @@ public class userlistFragment extends Fragment {
     private ArrayList<User> userArrayList = new ArrayList<User>();
     private String myID;
     private Query query;
-    private User mUser;
-    private User chatUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_userlist, container, false);
+        if(userArrayList!=null)
+            userArrayList.clear();
         listView = (ListView)layout.findViewById(R.id.user_listView);
         final UserListAdapter userListAdapter = new UserListAdapter(getActivity(),R.layout.user_list_row,userArrayList);
         listView.setAdapter(userListAdapter);
@@ -73,7 +67,6 @@ public class userlistFragment extends Fragment {
                     User user = datas.getValue(User.class);
                     if(user.getId().equals(myID)) {
                         Log.e(TAG, "로그인한 사용자 : "+myID + " 제외");
-                        mUser = user;
                         continue;
                     }
                     else

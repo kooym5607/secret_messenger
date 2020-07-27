@@ -22,6 +22,7 @@ import java.security.InvalidKeyException;
 import java.util.regex.Pattern;
 
 import edu.project.secret_messenger.object.User;
+import static edu.project.secret_messenger.util.textFilter.*;
 
 import static edu.project.secret_messenger.util.util.*;
 
@@ -108,27 +109,5 @@ public class signupActivity extends AppCompatActivity {
             }
         });
     }
-    protected InputFilter filterAlphaNum = new InputFilter() { //영어, 숫자 사용. 띄어쓰기 불가.
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
-
-            if (!ps.matcher(source).matches()) {
-                return "";
-            }
-            return null;
-        }
-    };
-    protected InputFilter filterKoEnNum2 = new InputFilter() { // 한글,영어,숫자 사용. 띄어쓰기 허용
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            if(source.equals("")){ // for backspace
-                return source;
-            }
-            if(source.toString().matches("[a-z0-9ㄱ-ㅎ가-힣 ]+")){
-                return source;
-            }
-
-            return "";
-        }
-    };
 
 }

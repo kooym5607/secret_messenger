@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -28,8 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import edu.project.secret_messenger.LobbyActivity;
-import edu.project.secret_messenger.OnBackPressedListener;
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.User;
 import edu.project.secret_messenger.util.SaveSharedPreference;
@@ -60,6 +58,7 @@ public class userlistFragment extends Fragment {
         });
 
         myID = SaveSharedPreference.getId(this.getContext());
+        myID = getArguments().getString("myID");
         Log.w(TAG, "로그인한 사용자 : "+myID);
         query = ref.child("user/");
 
@@ -92,7 +91,19 @@ public class userlistFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                final int index = userListAdapter.getPosition(snapshot.getValue(User.class));
+                final User user = snapshot.getValue(User.class);
+                for(DataSnapshot datas: snapshot.getChildren()){
+                    String key = datas.getKey();
+                    switch(key){
+                        case "isLogin":
+                            boolean value = datas.getValue(boolean.class);
+                            user.setIs_Login(value);
+                            userArrayList.set(index,user);
+                            break;
+                    }
+                    userListAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -110,6 +121,7 @@ public class userlistFragment extends Fragment {
 
             }
         });
+
 
         return layout;
     }
@@ -132,11 +144,13 @@ public class userlistFragment extends Fragment {
             user = items.get(position);
             if (user != null) {
                 TextView name = (TextView) view.findViewById(R.id.toptext);
+                ImageView loginStatus = (ImageView) view.findViewById(R.id.login_status);
                 if (name != null) {
                     name.setText(user.getName());
                 }
+                if(user.isIs_Login())
+                    loginStatus.setVisibility(View.VISIBLE);
             }
-
             return view;
         }
     }

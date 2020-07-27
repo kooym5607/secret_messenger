@@ -1,24 +1,27 @@
 package edu.project.secret_messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import edu.project.secret_messenger.fragment.chatFragment;
 import edu.project.secret_messenger.fragment.userlistFragment;
+import edu.project.secret_messenger.util.OnBackPressedListener;
 import edu.project.secret_messenger.util.SaveSharedPreference;
 
-public class LobbyActivity extends AppCompatActivity implements OnBackPressedListener{
+public class LobbyActivity extends AppCompatActivity implements OnBackPressedListener {
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference ref = database.getReference();
     private static final String TAG = "LobbyActivity";
     private ViewPager viewPager;
     private LobbyViewAdapter lobbyViewAdapter;
@@ -26,12 +29,18 @@ public class LobbyActivity extends AppCompatActivity implements OnBackPressedLis
     private userlistFragment userlistFragment = new userlistFragment();
     private chatFragment chatFragment = new chatFragment();
     long backPressedTime = 0;
-    LobbyActivity lobbyActivity;
+    private String myId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
         Intent intent = getIntent();
+        myId = intent.getStringExtra("myID");
+        Bundle bundle = new Bundle();
+        bundle.putString("myID",myId);
+        chatFragment.setArguments(bundle);
+        userlistFragment.setArguments(bundle);
 
         String noti = intent.getStringExtra("pendingIntent");
 
@@ -89,6 +98,8 @@ public class LobbyActivity extends AppCompatActivity implements OnBackPressedLis
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.logout:
+                ref = database.getReference("user").child(myId).child("isLogin");
+                ref.setValue(false);
                 SaveSharedPreference.logOut(getApplicationContext());
                 Toast.makeText(getApplicationContext(), "종료합니다",Toast.LENGTH_SHORT).show();
                 android.os.Process.killProcess(android.os.Process.myPid());

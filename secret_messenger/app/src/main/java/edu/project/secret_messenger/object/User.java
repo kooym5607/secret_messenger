@@ -1,11 +1,14 @@
 package edu.project.secret_messenger.object;
 
-import java.util.Map;
+/**
+ * TODO 로그인 유무 체크
+ */
 
 public class User {
     private String id;
     private String pw;
     private String name;
+    private boolean is_Login;
 
     public User(){}
 
@@ -19,5 +22,6 @@ public class User {
     public String getId() { return id;}
     public String getName() { return name;}
     public String getPw() { return pw;}
-
+    public boolean isIs_Login() { return is_Login; }
+    public void setIs_Login(boolean is_Login) { this.is_Login = is_Login; }
 }

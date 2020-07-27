@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private String loginID;
     private String myName;
     private boolean is_auto;
+    private boolean is_login;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("user/");
 
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         if(loginID !=null && pw != null){
             Intent intent = new Intent(LoginActivity.this,LobbyActivity.class);
             myRef = database.getReference("user").child(loginID);
+            myRef.child("isLogin").setValue(true);
             myRef.addListenerForSingleValueEvent(new ValueEventListener() { // 사용자 ID로부터 이름을 받아옴
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -121,11 +123,11 @@ public class LoginActivity extends AppCompatActivity {
                                             is_auto = true;
                                         else
                                             is_auto = false;
-
                                         Toast.makeText(LoginActivity.this.getApplicationContext(), "로그인 성공.\n ID : " + id, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(LoginActivity.this,LobbyActivity.class);
                                         intent.putExtra("myID",loginID);
-
+                                        DatabaseReference ref = database.getReference("user").child(loginID).child("isLogin");
+                                        ref.setValue(true);
                                         if(is_auto) {
                                             setAuto(getApplicationContext(),loginID,pw);
                                             Log.e(TAG, "자동로그인 활성화"+loginID+" "+pw);
@@ -166,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isPwEqual(DataSnapshot snap, String pw){ // 입력받은 패스워드와 DB에 있는 패스워드를 비교
         boolean result;
         if(snap.getValue().equals(pw)){
-           result = true;
+            result = true;
         } else {
             result = false;
         }

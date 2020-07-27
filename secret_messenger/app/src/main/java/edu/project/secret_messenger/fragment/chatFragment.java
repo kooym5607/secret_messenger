@@ -45,11 +45,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import android.text.InputFilter;
 
 import edu.project.secret_messenger.ARIA_CBC.Aria_CBC;
 import edu.project.secret_messenger.LobbyActivity;
-import edu.project.secret_messenger.OnBackPressedListener;
 import edu.project.secret_messenger.R;
 import edu.project.secret_messenger.object.ChatDTO;
 import edu.project.secret_messenger.util.SaveSharedPreference;
@@ -83,6 +81,7 @@ public class chatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_chatlist, container, false);
         listView = (ListView)layout.findViewById(R.id.chat_listView);
         if(chatDTOs!=null)
@@ -97,7 +96,7 @@ public class chatFragment extends Fragment {
         // 뷰 id 지정
 
         myID = SaveSharedPreference.getId(this.getContext());
-
+        myID = getArguments().getString("myID");
         ref = database.getReference("user").child(myID);
         ref.addListenerForSingleValueEvent(new ValueEventListener() { // 사용자 ID로부터 이름을 받아옴
             @Override
@@ -308,8 +307,10 @@ public class chatFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+
+
     /**
-     * Todo 메시지가 올 시 상단 알림
+     * Todo 자신이 보낸 메세지는 알림 x
      */
     public void msgNoti(Context context, ChatDTO chatDTO){
         String notiUserName = chatDTO.getUserName();

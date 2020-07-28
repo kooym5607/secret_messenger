@@ -1,9 +1,5 @@
 package edu.project.secret_messenger.object;
 
-/**
- * TODO 로그인 유무 체크
- */
-
 public class User {
     private String id;
     private String pw;

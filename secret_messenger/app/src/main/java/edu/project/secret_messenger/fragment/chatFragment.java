@@ -158,7 +158,7 @@ public class chatFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch(i){
-                            case 0:
+                            case 0: // 삭제
                                 if(chatDTOs.get(pos).getUserID().equals(myID)){ // 선택한 채팅이 사용자가 작성한 것인지 확인 후 삭제.
                                     String msgUid =chatDTOs.get(pos).getMsgUID();
                                     chatDTOs.remove(pos);
@@ -172,7 +172,7 @@ public class chatFragment extends Fragment {
                                 else
                                     Toast.makeText(getContext(), "이 채팅의 사용자가 아니여서 삭제 불가", Toast.LENGTH_SHORT).show();
                                 break;
-                            case 1:
+                            case 1: // 비밀메시지 보기
                                 if(chatDTOs.get(pos).getIs_Enc()==true){ // 비밀메시지인지 확인 후 복호화
                                     final EditText decKeytext = new EditText(getView().getContext());
                                     final AlertDialog.Builder decKeyDialog = new AlertDialog.Builder(getView().getContext(),android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
@@ -311,7 +311,6 @@ public class chatFragment extends Fragment {
         boolean noti_isEnc = chatDTO.getIs_Enc();
         if(noti_isEnc)
             notiMessage = "비밀 메시지";
-
 
         notificationManager = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
         notificationChannel = new NotificationChannel("noti_channel","channel",NotificationManager.IMPORTANCE_DEFAULT);

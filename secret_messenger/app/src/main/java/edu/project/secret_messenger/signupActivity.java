@@ -46,7 +46,6 @@ public class signupActivity extends AppCompatActivity {
         pwEdit = (EditText)findViewById(R.id.pw_signup);
         pwEdit.setFilters(new InputFilter[]{filterAlphaNum});
         nameEdit = (EditText)findViewById(R.id.name_signup);
-        nameEdit.setFilters(new InputFilter[]{filterKoEnNum2});
 
         sameidBtn = (Button)findViewById(R.id.idsameBtn);
         sameidBtn.setOnClickListener(new View.OnClickListener() {

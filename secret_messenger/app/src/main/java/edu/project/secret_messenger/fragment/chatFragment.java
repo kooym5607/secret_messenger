@@ -239,7 +239,11 @@ public class chatFragment extends Fragment {
                 Map<String,Object> childUpdates = new HashMap<>();
                 childUpdates.put(msgUid,chatValues);
                 ref.updateChildren(childUpdates);
+
+
                 msgNoti(getContext(),chatDTO);
+                if(!chatDTO.getUserID().equals(myID))
+                    notifi(notificationManager,noti);
                 chatEdit.setText("");
                 encKeyEdit.setText("");
                 enc_CheckBox.setChecked(false);
@@ -323,7 +327,6 @@ public class chatFragment extends Fragment {
         stackBuilder.addParentStack(LobbyActivity.class);
         stackBuilder.addNextIntent(notiIconClickIntent);
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-
         noti = new NotificationCompat.Builder(context,"noti_channel")
                 .setDefaults(Notification.DEFAULT_LIGHTS)
                 .setSmallIcon(R.drawable.noti_icon)
@@ -333,7 +336,10 @@ public class chatFragment extends Fragment {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .build();
-        notificationManager.notify(1234,noti);
+    }
+
+    private void notifi(NotificationManager ntm, Notification noti){
+        ntm.notify(1234,noti);
     }
     private void showDecChat(String msg){
         Log.e(TAG, "showDecChat");

@@ -123,6 +123,10 @@ public class chatFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 chatListAdapter.add(snapshot.getValue(ChatDTO.class));
+                msgNoti(getContext(),snapshot.getValue(ChatDTO.class));
+                if(noti!=null)
+                    if(!snapshot.getValue(ChatDTO.class).getUserID().equals(myID))
+                        notifi(notificationManager,noti);
             }
 
             @Override
@@ -241,9 +245,8 @@ public class chatFragment extends Fragment {
                 ref.updateChildren(childUpdates);
 
 
-                msgNoti(getContext(),chatDTO);
-                if(!chatDTO.getUserID().equals(myID))
-                    notifi(notificationManager,noti);
+
+
                 chatEdit.setText("");
                 encKeyEdit.setText("");
                 enc_CheckBox.setChecked(false);
@@ -310,6 +313,7 @@ public class chatFragment extends Fragment {
      * Todo 자신이 보낸 메세지는 알림 x
      */
     public void msgNoti(Context context, ChatDTO chatDTO){
+        Log.e(TAG, "msgNoti");
         String notiUserName = chatDTO.getUserName();
         String notiMessage = chatDTO.getMessage();
         boolean noti_isEnc = chatDTO.getIs_Enc();
@@ -339,6 +343,7 @@ public class chatFragment extends Fragment {
     }
 
     private void notifi(NotificationManager ntm, Notification noti){
+        Log.e(TAG, "notifi");
         ntm.notify(1234,noti);
     }
     private void showDecChat(String msg){

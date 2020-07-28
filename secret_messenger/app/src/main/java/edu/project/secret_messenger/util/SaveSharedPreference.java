@@ -21,7 +21,11 @@ public class SaveSharedPreference {
     }
     public static String getId(Context context){ return getSharedPreferences(context).getString("inputId",null);}
     public static String getPw(Context context){ return getSharedPreferences(context).getString("inputPw",null);}
-    public static void logOut(Context context){
+    public static void logOut(Context context, String id){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("user").child(id).child("isLogin");
+        ref.setValue(false);
+
         SharedPreferences.Editor logout = getSharedPreferences(context).edit();
         logout.clear();
         logout.commit();

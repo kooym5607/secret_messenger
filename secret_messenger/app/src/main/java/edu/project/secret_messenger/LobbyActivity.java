@@ -29,16 +29,16 @@ public class LobbyActivity extends AppCompatActivity implements OnBackPressedLis
     private userlistFragment userlistFragment = new userlistFragment();
     private chatFragment chatFragment = new chatFragment();
     long backPressedTime = 0;
-    private String myId;
+    private String myID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
         Intent intent = getIntent();
-        myId = intent.getStringExtra("myID");
+        myID = intent.getStringExtra("myID");
         Bundle bundle = new Bundle();
-        bundle.putString("myID",myId);
+        bundle.putString("myID",myID);
         chatFragment.setArguments(bundle);
         userlistFragment.setArguments(bundle);
 
@@ -98,9 +98,7 @@ public class LobbyActivity extends AppCompatActivity implements OnBackPressedLis
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.logout:
-                ref = database.getReference("user").child(myId).child("isLogin");
-                ref.setValue(false);
-                SaveSharedPreference.logOut(getApplicationContext());
+                SaveSharedPreference.logOut(getApplicationContext(), myID);
                 Toast.makeText(getApplicationContext(), "종료합니다",Toast.LENGTH_SHORT).show();
                 android.os.Process.killProcess(android.os.Process.myPid());
                 return true;
@@ -124,6 +122,9 @@ public class LobbyActivity extends AppCompatActivity implements OnBackPressedLis
 
         if (0 <= intervalTime && 2000 >= intervalTime)
         {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ref = database.getReference("user").child(myID).child("isLogin");
+            ref.setValue(false);
             android.os.Process.killProcess(android.os.Process.myPid());
             super.onBackPressed();
         }

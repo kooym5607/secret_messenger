@@ -8,7 +8,7 @@ public class User {
     private String id;
     private String pw;
     private String name;
-    private boolean is_Login;
+    private boolean isLogin;
 
     public User(){}
 
@@ -22,6 +22,6 @@ public class User {
     public String getId() { return id;}
     public String getName() { return name;}
     public String getPw() { return pw;}
-    public boolean isIs_Login() { return is_Login; }
-    public void setIs_Login(boolean is_Login) { this.is_Login = is_Login; }
+    public boolean isIsLogin() { return isLogin; }
+    public void setIsLogin(boolean isLogin) { this.isLogin = isLogin; }
 }

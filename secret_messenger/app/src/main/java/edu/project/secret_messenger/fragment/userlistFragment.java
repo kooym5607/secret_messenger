@@ -40,6 +40,7 @@ public class userlistFragment extends Fragment {
     private ArrayList<User> userArrayList = new ArrayList<User>();
     private String myID;
     private Query query;
+    private int listIdx;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,8 +74,9 @@ public class userlistFragment extends Fragment {
                         Log.e(TAG, "로그인한 사용자 : "+myID + " 제외");
                         continue;
                     }
-                    else
+                    else {
                         userArrayList.add(user);
+                    }
                 }
             }
             @Override
@@ -87,18 +89,22 @@ public class userlistFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 userListAdapter.add(snapshot.getValue(User.class));
+                Log.e(TAG, "onchildAdded");
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                final int index = userListAdapter.getPosition(snapshot.getValue(User.class));
+                final int index = getIndexOfList(snapshot.getKey());
+
+                Log.e(TAG, "유저리스트에서 바뀐 child index : "+index);
                 final User user = snapshot.getValue(User.class);
                 for(DataSnapshot datas: snapshot.getChildren()){
                     String key = datas.getKey();
+                    Log.e(TAG, "유저리스트에서 사용자 정보 키 : "+key);
                     switch(key){
-                        case "isLogin":
+                        case "isLogin": // 사용자 로그인 상태
                             boolean value = datas.getValue(boolean.class);
-                            user.setIs_Login(value);
+                            user.setIsLogin(value);
                             userArrayList.set(index,user);
                             break;
                     }
@@ -148,8 +154,10 @@ public class userlistFragment extends Fragment {
                 if (name != null) {
                     name.setText(user.getName());
                 }
-                if(user.isIs_Login())
+                if(user.isIsLogin())
                     loginStatus.setVisibility(View.VISIBLE);
+                else
+                    loginStatus.setVisibility(View.INVISIBLE);
             }
             return view;
         }
@@ -162,8 +170,26 @@ public class userlistFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    /**
-     * Todo 사용자 로그인 상태 확인 (User 객체에 isLogin 생성, 로그인할 때 true, 로그아웃할 때 false ;}
-     */
+    private int getIndexOfList(final String key){
+        listIdx = 0;
+        ref = database.getReference("user");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                for(DataSnapshot datas: snapshot.getChildren()){
+                    if(datas.getKey().equals(key))
+                        break;
+                    else
+                        listIdx++;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return listIdx;
+    }
 }

@@ -74,14 +74,15 @@ public class chatFragment extends Fragment {
     private String myID;
     private String mUserName;
     private String message;
+    private String plainText;
     private Date msg_Time;
     private String encKey;
     private boolean is_Enc;
     private Aria_CBC aria;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         final FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_chatlist, container, false);
         listView = (ListView)layout.findViewById(R.id.chat_listView);
         if(chatDTOs!=null)
@@ -198,14 +199,13 @@ public class chatFragment extends Fragment {
                                                     encKey = decKeytext.getText().toString();
                                                     aria = new Aria_CBC(encKey);
                                                     String cipherMsg = chatDTOs.get(pos).getMessage();
-                                                    String plain=aria.Decrypt(cipherMsg);
-
+                                                    plainText=aria.Decrypt(cipherMsg);
+                                                    Log.e(TAG, "plain = "+plainText);
                                                     /** TODO 복호화하여 사용자에게 어떻게 표현할 것인지 ;}
                                                      *
                                                      */
-                                                    chatListAdapter.getItem(pos).setMessage(plain);
-                                                    Log.e(TAG,"복호화한 문장 얻기 : "+chatDTOs.get(pos).getMessage());
-                                                    chatListAdapter.notifyDataSetChanged();
+
+
                                                 }
                                             });
                                     decKeyDialog.show();
@@ -215,7 +215,13 @@ public class chatFragment extends Fragment {
                         }
                     }
                 });
+                Bundle args = new Bundle();
+                args.putString("plain",plainText);
+                decPopupFragment decPopup = new decPopupFragment();
+                decPopup.setArguments(args);
+                decPopup.show(getActivity().getSupportFragmentManager(),"tag");
                 dialog.create().show();
+
 
                 return true;
             }
@@ -343,6 +349,8 @@ public class chatFragment extends Fragment {
                 .build();
         notificationManager.notify(1234,noti);
     }
+
+
 }
 class ByteLengthFilter implements InputFilter {
     private String mCharset; // 인코딩 문자셋

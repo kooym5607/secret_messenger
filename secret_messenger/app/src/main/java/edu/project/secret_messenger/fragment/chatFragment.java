@@ -89,6 +89,14 @@ public class chatFragment extends Fragment {
             chatDTOs.clear();
         chatListAdapter = new ChatListAdapter(getContext(),R.layout.chat_list_row,chatDTOs);
         listView.setAdapter(chatListAdapter);
+        chatListAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                listView.setSelection(chatListAdapter.getCount()-1);
+            }
+        });
+        listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         enc_CheckBox = (CheckBox)layout.findViewById(R.id.enc_check);
         encKeyEdit = (EditText)layout.findViewById(R.id.encKey);
         encKeyEdit.setFilters(new InputFilter[]{new ByteLengthFilter(16,"EUC-KR")});
@@ -110,28 +118,6 @@ public class chatFragment extends Fragment {
         });
 
         ref = database.getReference("messages");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() { // 처음 채팅목록 받아오기
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(chatListAdapter!=null)
-                    chatListAdapter.clear();
-                for(DataSnapshot datas: snapshot.getChildren()){
-                    chatListAdapter.add(datas.getValue(ChatDTO.class));
-                }
-                chatListAdapter.registerDataSetObserver(new DataSetObserver() {
-                    @Override
-                    public void onChanged() {
-                        super.onChanged();
-                        listView.setSelection(chatListAdapter.getCount()-1);
-                    }
-                });
-                listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         ref.addChildEventListener(new ChildEventListener() { // 채팅이 추가/삭제 될 때 마다 리스트어댑터에 추가/삭제
             @Override
@@ -189,38 +175,39 @@ public class chatFragment extends Fragment {
                             case 1:
                                 if(chatDTOs.get(pos).getIs_Enc()==true){ // 비밀메시지인지 확인 후 복호화
                                     final EditText decKeytext = new EditText(getView().getContext());
-                                    AlertDialog.Builder decKeyDialog = new AlertDialog.Builder(getView().getContext(),android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                                    final AlertDialog.Builder decKeyDialog = new AlertDialog.Builder(getView().getContext(),android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                                    final AlertDialog mDialog = decKeyDialog.create();
+
                                     decKeyDialog.setTitle("비밀번호");
                                     decKeyDialog.setView(decKeytext);
+
                                     decKeyDialog.setPositiveButton("입력",
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                                    /**
+                                                     * Todo 비밀키가 틀렸을 시에 그냥 암호문으로 나올지, 알려줄 지
+                                                     */
                                                     encKey = decKeytext.getText().toString();
                                                     aria = new Aria_CBC(encKey);
                                                     String cipherMsg = chatDTOs.get(pos).getMessage();
                                                     plainText=aria.Decrypt(cipherMsg);
-                                                    Log.e(TAG, "plain = "+plainText);
-                                                    /** TODO 복호화하여 사용자에게 어떻게 표현할 것인지 ;}
-                                                     *
-                                                     */
-
-
+                                                    if(plainText!=null)
+                                                        showDecChat(plainText);
+                                                    mDialog.dismiss();
                                                 }
                                             });
                                     decKeyDialog.show();
+
                                 }
                                 else
                                     Toast.makeText(getContext(), "비밀메시지가 아닙니다", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-                Bundle args = new Bundle();
-                args.putString("plain",plainText);
-                decPopupFragment decPopup = new decPopupFragment();
-                decPopup.setArguments(args);
-                decPopup.show(getActivity().getSupportFragmentManager(),"tag");
+
                 dialog.create().show();
+
 
 
                 return true;
@@ -349,8 +336,14 @@ public class chatFragment extends Fragment {
                 .build();
         notificationManager.notify(1234,noti);
     }
-
-
+    private void showDecChat(String msg){
+        Log.e(TAG, "showDecChat");
+        Bundle bundle = new Bundle();
+        bundle.putString("plain",msg);
+        decPopupFragment dialog = new decPopupFragment();
+        dialog.setArguments(bundle);
+        dialog.show(this.getActivity().getSupportFragmentManager(),"tag");
+    }
 }
 class ByteLengthFilter implements InputFilter {
     private String mCharset; // 인코딩 문자셋
@@ -446,6 +439,7 @@ class ByteLengthFilter implements InputFilter {
         return 0;
     }
 }
+
 
 
 

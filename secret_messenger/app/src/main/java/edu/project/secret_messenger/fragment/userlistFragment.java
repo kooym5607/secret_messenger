@@ -63,32 +63,13 @@ public class userlistFragment extends Fragment {
         Log.w(TAG, "로그인한 사용자 : "+myID);
         query = ref.child("user/");
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() { // user 하위 리스트를 배열에 추가
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(userListAdapter!=null)
-                    userListAdapter.clear();
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
-                    User user = datas.getValue(User.class);
-                    if(user.getId().equals(myID)) {
-                        Log.e(TAG, "로그인한 사용자 : "+myID + " 제외");
-                        continue;
-                    }
-                    else {
-                        userArrayList.add(user);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w(TAG,"Firebase DB 값 불러오는데 실패.", databaseError.toException());
-            }
-        });
-
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                userListAdapter.add(snapshot.getValue(User.class));
+                User user = snapshot.getValue(User.class);
+                if(!user.getId().equals(myID))
+                    userListAdapter.add(snapshot.getValue(User.class));
+                userListAdapter.notifyDataSetChanged();
                 Log.e(TAG, "onchildAdded");
             }
 
